@@ -1,0 +1,186 @@
+/* CSS cho Admin area */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f7f6;
+  color: #343a40;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  background: #343a40;
+  color: #fff;
+  transition: all 0.3s;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+#sidebar.active {
+  margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+  padding: 20px;
+  background: #212529;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#sidebar .sidebar-header h4 {
+  margin-bottom: 5px;
+  color: #007bff;
+  font-weight: bold;
+}
+
+#sidebar .sidebar-header small {
+  color: #adb5bd;
+}
+
+#sidebar ul.components {
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#sidebar ul li a {
+  padding: 15px 20px;
+  font-size: 1.1em;
+  display: block;
+  color: #adb5bd;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+#sidebar ul li a:hover {
+  color: #fff;
+  background: #495057;
+}
+
+#sidebar ul li.active > a,
+a[aria-expanded="true"] {
+  color: #fff;
+  background: #007bff;
+}
+
+#sidebar ul li a i {
+  margin-right: 10px;
+}
+
+ul ul a {
+  font-size: 0.9em !important;
+  padding-left: 30px !important;
+  background: #495057;
+}
+
+#content {
+  width: 100%;
+  min-height: 100vh;
+  transition: all 0.3s;
+}
+
+.navbar {
+  padding: 15px 20px;
+  background: #fff;
+  border-bottom: 1px solid #dee2e6;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+#sidebarCollapse {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  font-size: 1.1rem;
+}
+
+#sidebarCollapse:hover {
+  background: #0056b3;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.dropdown-menu {
+  border-radius: 0.25rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card {
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+  background-color: #fff;
+  border-bottom: 1px solid #e3e6f0;
+  color: #4e73df;
+  font-weight: bold;
+}
+
+.border-left-primary {
+  border-left: 0.25rem solid #007bff !important;
+}
+.border-left-success {
+  border-left: 0.25rem solid #28a745 !important;
+}
+.border-left-info {
+  border-left: 0.25rem solid #17a2b8 !important;
+}
+.border-left-warning {
+  border-left: 0.25rem solid #ffc107 !important;
+}
+
+.text-xs {
+  font-size: 0.7rem;
+}
+.text-gray-300 {
+  color: #dee2e6 !important;
+}
+.text-gray-800 {
+  color: #343a40 !important;
+}
+
+.table-responsive {
+  margin-top: 1rem;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+.table-sm th,
+.table-sm td {
+  padding: 0.5rem;
+}
+
+.badge {
+  padding: 0.5em 0.7em;
+  font-size: 0.75em;
+  font-weight: 600;
+  border-radius: 0.25rem;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
+
+.alert {
+  margin-top: 1rem;
+}
