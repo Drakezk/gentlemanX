@@ -93,10 +93,9 @@
                 </a>
 
                 <?php if (isset($_SESSION['user'])): ?>
-                    <a href="<?php echo Helper::url('account') ?>" class="text-dark me-2" title="Tài khoản">
+                    <a href="<?php echo Helper::url('auth/account') ?>" class="text-dark me-2" title="Tài khoản">
                         <i class="fas fa-user fs-5"></i>
                     </a>
-                    <a href="<?php echo Helper::url('auth/logout') ?>" class="text-danger small ms-2">Đăng xuất</a>
                 <?php else: ?>
                     <a href="<?php echo Helper::url('auth/login') ?>" class="text-dark me-2">Đăng nhập</a> /
                     <a href="<?php echo Helper::url('auth/register') ?>" class="text-dark ms-2">Đăng ký</a>

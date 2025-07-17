@@ -22,6 +22,9 @@ class DashboardController extends Controller {
      * Trang dashboard chính
      */
     public function index() {
+
+        // Lấy thông tin user từ session
+        $currentUser = $_SESSION['user'] ?? null;
         // Lấy thống kê
         $userStats = $this->userModel->getStats();
         $productStats = $this->productModel->getStats();
@@ -35,6 +38,7 @@ class DashboardController extends Controller {
         
         $data = [
             'title' => 'Dashboard',
+            'currentUser' => $currentUser,
             'userStats' => $userStats,
             'productStats' => $productStats,
             // 'orderStats' => $orderStats,
