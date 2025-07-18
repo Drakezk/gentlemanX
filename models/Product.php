@@ -9,11 +9,9 @@ class Product extends Model {
     protected $fillable = [
         'category_id', 'brand_id', 'name', 'slug', 'sku', 
         'short_description', 'description', 'price', 'compare_price', 
-        'cost_price', 'stock_quantity', 'min_stock_level', 
-        'track_inventory', 'allow_backorder', 'weight', 'length', 
-        'width', 'height', 'featured_image', 'gallery', 
-        'meta_title', 'meta_description', 'meta_keywords', 
-        'status', 'is_featured', 'is_digital'
+        'stock_quantity', 'min_stock_level', 
+        'featured_image', 'gallery', 
+        'status', 'is_featured'
     ];
     
     /**

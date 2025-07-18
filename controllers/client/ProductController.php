@@ -83,7 +83,7 @@ class ProductController extends Controller {
             'breadcrumb' => $breadcrumb
         ];
         
-        $this->view('product/detail', $data, 'client');
+        $this->view('home/detail', $data, 'client');
     }
     
     /**
@@ -114,7 +114,7 @@ class ProductController extends Controller {
             'filters' => $filters
         ];
         
-        $this->view('product/search', $data, 'client');
+        $this->view('home/search', $data, 'client');
     }
 }
 ?>

@@ -6,7 +6,7 @@
 
 // Cấu hình Database
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'test');
+define('DB_NAME', 'base_test');
 define('DB_USER', 'root');
 define('DB_PASS', 'khointt3925');
 define('DB_CHARSET', 'utf8mb4');
