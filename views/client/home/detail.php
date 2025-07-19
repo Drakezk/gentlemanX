@@ -96,9 +96,20 @@
         <?php endif; ?>
 
         <div class="d-grid gap-2">
-          <button class="btn btn-lg btn-primary rounded-pill shadow-sm hover-scale">
-            <i class="fas fa-shopping-cart me-2"></i>Thêm vào giỏ hàng
-          </button>
+          <?php if (!empty($_SESSION['user'])): ?>
+            <form method="POST" action="<?php echo Helper::url('cart/add'); ?>" class="m-0">
+              <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+              <button class="btn btn-lg btn-primary rounded-pill shadow-sm hover-scale w-100">
+                <i class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng
+              </button>
+            </form>
+          <?php else: ?>
+            <!-- Chưa login, click sẽ đưa sang login -->
+            <a href="<?php echo Helper::url('auth/login'); ?>"
+              class="btn btn-lg btn-primary rounded-pill shadow-sm hover-scale w-100 d-flex align-items-center justify-content-center">
+              <i class="fas fa-sign-in-alt me-2"></i> Đăng nhập để mua
+            </a>
+          <?php endif; ?>
         </div>
       </div>
     </div>
