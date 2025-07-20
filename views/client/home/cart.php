@@ -48,8 +48,7 @@
           <tfoot>
             <tr>
               <td colspan="2" class="text-end fw-bold">Tổng tiền:</td>
-              <td class="fw-bold text-danger h5"><?php echo Helper::formatMoney($total); ?></td>
-              <td></td>
+              <td class="fw-bold text-danger h5"><?php echo Helper::formatMoney($total); ?></td>             
             </tr>
           </tfoot>
         </table>

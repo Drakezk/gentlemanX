@@ -87,7 +87,7 @@
             <div class="col-md-3 footer-section">
                 <h5 class="text-white fw-semibold">Liên hệ</h5>
                 <ul class="list-unstyled text-white">
-                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>123 Nguyễn Huệ, Quận 1, TP.HCM</li>
+                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>123 Phố Văn Trì, Quận Bắc Từ Liêm, Hà Nội</li>
                     <li class="mb-2"><i class="fas fa-phone me-2"></i>0123 456 789</li>
                     <li class="mb-2"><i class="fas fa-envelope me-2"></i>support@gentlemanx.com</li>
                     <li><i class="fas fa-clock me-2"></i>9:00 - 22:00 (Thứ 2 - Chủ nhật)</li>

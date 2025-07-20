@@ -61,6 +61,13 @@
                 <?php if ($product['compare_price'] > $product['price']): ?>
                   <span class="badge bg-danger position-absolute top-0 start-0 m-2">Sale</span>
                 <?php endif; ?>
+                <?php if (isset($_SESSION['user'])): ?>
+                  <a href="<?php echo Helper::url('wishlist/add/' . $product['id']); ?>" 
+                    class="wishlist-btn position-absolute top-0 end-0 m-2"
+                    title="Thêm vào yêu thích">
+                    <i class="fas fa-heart"></i>
+                  </a>
+                <?php endif; ?>
               </div>
               <div class="card-body d-flex flex-column">
                 <h6 class="card-title">
@@ -102,4 +109,36 @@
   </div>
 </section>
 
+<style>
+  .wishlist-btn {
+    width: 42px;
+    height: 42px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(4px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #dc3545; /* màu đỏ mặc định */
+}
+
+.wishlist-btn:hover {
+    background: #dc3545;
+    color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Nếu muốn trạng thái đã yêu thích thì thêm class active */
+.wishlist-btn.active {
+    background: #dc3545;
+    color: #fff;
+}
+.wishlist-btn.active:hover {
+    background: #b52d3a;
+}
+</style>
 <?php include 'views/client/layouts/footer.php'; ?>

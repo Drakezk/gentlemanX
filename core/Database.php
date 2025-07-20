@@ -121,6 +121,17 @@ class Database {
         }
     }
     
+    public function insert($sql, $params = []) {
+    try {
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute($params);
+        return $this->connection->lastInsertId(); // Lấy ID vừa thêm
+    } catch (PDOException $e) {
+        error_log("Database Insert Error: " . $e->getMessage());
+        return false;
+    }
+    }
+
     /**
      * Lấy ID của record vừa insert
      * @return string

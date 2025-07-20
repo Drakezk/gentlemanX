@@ -68,7 +68,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <a href="<?php echo Helper::url('order/detail/' . $order['id']); ?>" class="btn btn-sm btn-outline-primary rounded-pill">
+                                    <a href="<?php echo Helper::url('checkout/detail/' . $order['id']); ?>" class="btn btn-sm btn-outline-primary rounded-pill">
                                         <i class="fas fa-eye me-1"></i> Xem chi tiết
                                     </a>
                                 </td>

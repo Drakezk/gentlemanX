@@ -80,7 +80,7 @@
             <!-- Actions -->
             <div class="header-actions d-flex align-items-center mt-3 mt-md-0">
                 <?php if (isset($_SESSION['user'])): ?>
-                    <a href="<?php echo Helper::url('wishlist') ?>" class="text-dark me-3" title="Yêu thích">
+                    <a href="<?php echo Helper::url('wishlist/index') ?>" class="text-dark me-3" title="Yêu thích">
                         <i class="fas fa-heart fs-5"></i>
                     </a>
                 <?php endif; ?>
