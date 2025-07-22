@@ -16,7 +16,7 @@
         <nav id="sidebar" class="sidebar">
             <div class="sidebar-header">
                 <h4><?php echo APP_NAME ?></h4>
-                <small>Admin Panel</small>
+                <small>Admin</small>
             </div>
             
             <ul class="list-unstyled components">
@@ -32,7 +32,7 @@
                         <i class="fas fa-box"></i> Quản lý sản phẩm
                     </a>
                     <ul class="collapse list-unstyled" id="productSubmenu">
-                        <li><a href="<?php echo Helper::url('admin/product') ?>">Danh sách sản phẩm</a></li>
+                        <li><a href="<?php echo Helper::url('admin/product/index') ?>">Danh sách sản phẩm</a></li>
                         <li><a href="<?php echo Helper::url('admin/product/create') ?>">Thêm sản phẩm</a></li>
                         <li><a href="<?php echo Helper::url('admin/category') ?>">Danh mục</a></li>
                         <li><a href="<?php echo Helper::url('admin/brand') ?>">Thương hiệu</a></li>

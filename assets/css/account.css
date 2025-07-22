@@ -1,0 +1,70 @@
+body {
+    background-color: #f7f9fc;
+  }
+  h1.fw-bold.text-dark.mb-1 {
+    background: linear-gradient(90deg, #0d6efd, #6610f2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .account-card {
+    background: #fff;
+    border-radius: 1rem;
+    border: none;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+  }
+  .account-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+  .hover-shadow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08) !important;
+  }
+  .transition-all {
+    transition: all 0.3s ease;
+  }
+
+  /* Hiệu ứng fade-in bảng */
+  .table-responsive {
+    animation: fadeInUp 0.6s ease both;
+  }
+  @keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Hover trên từng hàng đơn hàng */
+  .table tbody tr {
+    transition: all 0.3s ease;
+  }
+  .table tbody tr:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transform: scale(1.01);
+  }
+
+  /* Hiệu ứng badge trạng thái pending */
+  .pulse-badge {
+    position: relative;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255,193,7,0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(255,193,7,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,193,7,0); }
+  }
+
+  /* Nút Xem chi tiết hover */
+  .table tbody tr a.btn {
+    transition: all 0.2s ease;
+  }
+  .table tbody tr a.btn:hover {
+    background-color: #0d6efd;
+    color: #fff;
+    transform: translateY(-1px);
+  }
+  .table tbody tr a.btn:hover i {
+    transform: scale(1.2);
+    transition: transform 0.2s ease;
+  }

@@ -1,0 +1,101 @@
+/* Sticky hiện đại */
+        .header.sticky-active {
+        background: rgba(255,255,255,0.95); /* nền trắng mờ */
+        backdrop-filter: blur(8px);          /* hiệu ứng blur */
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        }
+        /* Logo hiện đại hơn */
+        .logo {
+        font-size: 1.9rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        text-decoration: none;
+        background: linear-gradient(90deg, #212529, #495057); /* màu chữ Gentleman */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        }
+        .logo span {
+        background: linear-gradient(90deg, #0d6efd, #6610f2); /* màu gradient X */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        }
+
+        /* Icon trong header khi hover */
+        .header-actions a i {
+        color: #212529;
+        transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .header-actions a:hover i {
+        color: #0d6efd; /* đổi màu khi hover */
+        transform: scale(1.2);
+        }
+
+        /* Search bar */
+        .search-bar input {
+        border-radius: 50px;
+        border: 2px solid #dee2e6;
+        padding-left: 15px;
+        transition: all 0.3s ease;
+        }
+        .search-bar input:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13,110,253,0.25);
+        }
+        .search-bar button {
+        border-radius: 50px;
+        background: linear-gradient(90deg,#0d6efd,#6610f2);
+        border: none;
+        transition: all 0.3s ease;
+        }
+        .search-bar button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        /* Badge giỏ hàng */
+        .header-actions .badge {
+        font-size: 0.7rem;
+        padding: 0.4em 0.45em;
+        font-weight: 600;
+        box-shadow: 0 0 0 2px #fff;
+        background: #dc3545;
+        }
+
+        /* Menu hover underline + màu icon/text */
+        .nav-link {
+        position: relative;
+        padding: 0.75rem 1rem;
+        transition: color 0.3s ease;
+        }
+        .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 0.3rem;
+        width: 0;
+        height: 2px;
+        background: #0d6efd;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+        border-radius: 1px;
+        }
+        .nav-link:hover {
+        color: #0d6efd !important;
+        }
+        .nav-link:hover::after {
+        width: 60%;
+        }
+
+        /* Search button gradient */
+        .search-bar button {
+        border-radius: 50px;
+        background: linear-gradient(90deg, #0d6efd, #6610f2);
+        border: none;
+        color: #fff;
+        transition: all 0.3s ease;
+        }
+        .search-bar button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }

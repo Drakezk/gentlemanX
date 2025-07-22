@@ -1,22 +1,21 @@
 <?php include 'views/client/layouts/header.php'; ?>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<link rel="stylesheet" href="<?php echo Helper::asset('css/index.css') ?>">
+
 <!-- Hero Section -->
 <section class="hero-section bg-primary text-white py-5">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6 mb-4 mb-lg-0">
                 <h1 class="display-4 fw-bold mb-3">
-                    Khẳng định đẳng cấp cùng <span class="text-warning">Gentleman-X</span>
+                  Khẳng định đẳng cấp cùng <span class="brand-highlight">Gentleman-X</span>
                 </h1>
                 <p class="lead mb-4">
-                    BST mới 2024 – Chất liệu cao cấp, thiết kế lịch lãm, ưu đãi độc quyền dành cho quý ông hiện đại.
+                  BST mới 2024 – Chất liệu cao cấp, thiết kế lịch lãm, ưu đãi độc quyền dành cho quý ông hiện đại.
                 </p>
-                <a href="<?php echo Helper::url('product') ?>" 
-                    class="btn btn-light btn-lg px-4 py-2 rounded-pill fw-semibold shadow-sm d-inline-flex align-items-center gap-2 border border-dark text-dark text-decoration-none"
-                    style="transition: all 0.3s ease;" 
-                    onmouseover="this.style.boxShadow='0 6px 14px rgba(0,0,0,0.1)'; this.style.transform='translateY(-2px)'"
-                    onmouseout="this.style.boxShadow='0 .125rem .25rem rgba(0,0,0,.075)'; this.style.transform='none'">
-                    Khám phá ngay <i class="fas fa-arrow-right"></i>
+                <a href="<?php echo Helper::url('home/productList') ?>" class="btn btn-light btn-lg rounded-pill">
+                  Khám phá ngay
                 </a>
             </div>
             <div class="col-lg-6">
@@ -27,9 +26,91 @@
     </div>
 </section>
 
+<!-- Service Highlights -->
+<section class="service-highlights py-4 bg-white">
+  <div class="container">
+    <div class="row g-3">
+      <!-- Item 1 -->
+      <div class="col-md-3 col-6 wow animate__animated animate__fadeInUp" data-wow-delay="0.1s">
+        <div class="service-box p-3 text-center h-100">
+          <i class="fas fa-shipping-fast fa-2x mb-2"></i>
+          <p class="mb-0 small">
+            Vận chuyển <strong>MIỄN PHÍ</strong><br>
+            Trong khu vực <strong>TP. HA NOI</strong>
+          </p>
+        </div>
+      </div>
+      <!-- Item 2 -->
+      <div class="col-md-3 col-6 wow animate__animated animate__fadeInUp" data-wow-delay="0.2s">
+        <div class="service-box p-3 text-center h-100">
+          <i class="fas fa-id-card fa-2x mb-2"></i>
+          <p class="mb-0 small">
+            Tích điểm Nâng hạng<br>
+            <strong>THẺ THÀNH VIÊN</strong>
+          </p>
+        </div>
+      </div>
+      <!-- Item 3 -->
+      <div class="col-md-3 col-6 wow animate__animated animate__fadeInUp" data-wow-delay="0.3s">
+        <div class="service-box p-3 text-center h-100">
+          <i class="fas fa-credit-card fa-2x mb-2"></i>
+          <p class="mb-0 small">
+            Tiến hành <strong>THANH TOÁN</strong><br>
+            Với nhiều <strong>PHƯƠNG THỨC</strong>
+          </p>
+        </div>
+      </div>
+      <!-- Item 4 -->
+      <div class="col-md-3 col-6 wow animate__animated animate__fadeInUp" data-wow-delay="0.4s">
+        <div class="service-box p-3 text-center h-100">
+          <i class="fas fa-undo fa-2x mb-2"></i>
+          <p class="mb-0 small">
+            <strong>100% HOÀN TIỀN</strong><br>
+            nếu sản phẩm lỗi
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sub Banners -->
+<section class="sub-banners py-5 fade-up">
+  <div class="container">
+    <div class="row g-4">
+      <!-- Banner 1 -->
+      <div class="col-md-6">
+        <div class="banner-item position-relative overflow-hidden rounded-4 shadow-sm">
+          <img src="<?php echo Helper::asset('images/banner-phu-1.jpg') ?>" class="img-fluid w-100" alt="BST Thu Đông">
+          <div class="banner-overlay d-flex flex-column justify-content-center align-items-start p-4">
+            <h3 class="text-white fw-bold mb-2">BST Thu Đông 2025</h3>
+            <p class="text-white-50 mb-3">Khám phá phong cách ấm áp & lịch lãm</p>
+            <a href="<?php echo Helper::url('home/productList') ?>" class="btn btn-light btn-sm rounded-pill fw-semibold">
+              Khám phá ngay
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Banner 2 -->
+      <div class="col-md-6">
+        <div class="banner-item position-relative overflow-hidden rounded-4 shadow-sm">
+          <img src="<?php echo Helper::asset('images/banner-phu-2.jpg') ?>" class="img-fluid w-100" alt="Ưu đãi đặc biệt">
+          <div class="banner-overlay d-flex flex-column justify-content-center align-items-start p-4">
+            <h3 class="text-white fw-bold mb-2">Xu hướng Xuân Hè 2025</h3>
+            <p class="text-white-50 mb-3">Phong cách trẻ trung, năng động</p>
+            <a href="<?php echo Helper::url('home/productList') ?>" class="btn btn-light btn-sm rounded-pill fw-semibold">
+              Khám phá ngay
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Categories Section -->
 <?php if (!empty($categories)): ?>
-<section class="categories-section py-5">
+<section class="categories-section py-5 fade-up">
     <div class="container">
         <h2 class="text-center mb-2 fw-bold">Danh mục sản phẩm</h2>
         <p class="text-center text-muted mb-4">Khám phá phong cách quý ông từ những sản phẩm chủ đạo</p>
@@ -64,7 +145,7 @@
 
 <!-- Featured Products -->
 <?php if (!empty($featuredProducts)): ?>
-<section class="featured-products py-5 bg-light">
+<section class="featured-products py-5 bg-light fade-up">
     <div class="container">
         <h2 class="text-center mb-5">Sản phẩm nổi bật</h2>
         <div class="row">
@@ -132,9 +213,28 @@
 </section>
 <?php endif; ?>
 
+<!-- Banner Trên Sản Phẩm Mới Nhất -->
+<section class="full-banner position-relative my-5 rounded-4 overflow-hidden shadow-lg fade-up">
+  <div class="banner-wrapper">
+    <img src="<?php echo Helper::asset('images/banner-uu_dai.jpg') ?>" 
+         alt="Ưu đãi đặc biệt" class="img-fluid w-100 banner-bg">
+    <div class="banner-overlay"></div>
+    <div class="banner-content position-absolute top-50 start-50 translate-middle text-center text-white p-4">
+      <h2 class="display-5 fw-bold mb-3">✨ Ưu Đãi Đặc Biệt Tháng Này ✨</h2>
+      <p class="lead mb-4">
+        Sở hữu phong cách quý ông với BST mới nhất, ưu đãi lên tới <strong>-40%</strong>!
+      </p>
+      <a href="<?php echo Helper::url('home/productList') ?>" class="banner-btn">
+        Khám phá ngay <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+
 <!-- Latest Products -->
 <?php if (!empty($latestProducts)): ?>
-<section class="latest-products py-5">
+<section class="latest-products py-5 fade-up">
     <div class="container">
         <h2 class="text-center mb-5">Sản phẩm mới nhất</h2>
         <div class="row">
@@ -191,36 +291,10 @@
 </section>
 <?php endif; ?>
 
-<style>
-    .wishlist-btn {
-    width: 42px;
-    height: 42px;
-    background: rgba(255,255,255,0.9);
-    backdrop-filter: blur(4px);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    transition: all 0.3s ease;
-    text-decoration: none;
-    color: #dc3545; /* màu đỏ mặc định */
-}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+<script>
+  new WOW().init();
+</script>
+<script src="<?php echo Helper::asset('js/index.js'); ?>"></script>
 
-.wishlist-btn:hover {
-    background: #dc3545;
-    color: #fff;
-    transform: scale(1.1);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-/* Nếu muốn trạng thái đã yêu thích thì thêm class active */
-.wishlist-btn.active {
-    background: #dc3545;
-    color: #fff;
-}
-.wishlist-btn.active:hover {
-    background: #b52d3a;
-}
-</style>
 <?php include 'views/client/layouts/footer.php'; ?>

@@ -94,7 +94,7 @@ body {
   font-weight: 600;
   line-height: 1.4;
   display: block;
-  height: 45px; /* Fixed height for title */
+  height: 45px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
@@ -102,14 +102,14 @@ body {
 
 .product-card .card-text {
   font-size: 0.9rem;
-  height: 40px; /* Fixed height for description */
+  height: 40px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
 }
 
 .price-section {
-  margin-top: auto; /* Push price to bottom */
+  margin-top: auto;
 }
 
 .btn-primary {

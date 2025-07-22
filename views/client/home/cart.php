@@ -61,7 +61,11 @@
       </div>
 
     <?php else: ?>
-      <div class="alert alert-info">Giỏ hàng của bạn đang trống.</div>
+      <div class="text-center py-5">
+        <img src="<?php echo Helper::asset('images/empty-shopping-cart.jpg'); ?>" alt="Empty" class="mb-4" style="max-width:500px;">
+        <h4 class="fw-semibold mb-3">Giỏ hàng của bạn đang trống</h4>
+        <p class="text-muted mb-4">Hãy tìm kiếm và thêm sản phẩm để mua sắm nhé!</p>
+      </div>
     <?php endif; ?>
   </div>
 </section>

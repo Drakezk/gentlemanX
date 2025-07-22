@@ -18,7 +18,7 @@ define('UPLOAD_PATH', ROOT_PATH . 'assets/uploads/');
 define('UPLOAD_URL', BASE_URL . 'assets/uploads/');
 
 // Cấu hình ứng dụng
-define('APP_NAME', 'MVC E-Commerce');
+define('APP_NAME', 'Gentleman-X');
 define('APP_VERSION', '1.0.0');
 define('DEFAULT_CONTROLLER', 'Home');
 define('DEFAULT_ACTION', 'index');

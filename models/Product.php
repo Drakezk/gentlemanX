@@ -77,7 +77,7 @@ class Product extends Model {
         $countSql = preg_replace('/LIMIT.*/', '', $countSql);
         
         $totalResult = $this->db->selectOne($countSql, array_slice($params, 0, -2));
-        $total = $totalResult['total'];
+        $total = ($totalResult && isset($totalResult['total'])) ? (int)$totalResult['total'] : 0;
         
         return [
             'data' => $data,
@@ -205,7 +205,7 @@ class Product extends Model {
         }
         
         $totalResult = $this->db->selectOne($countSql, $countParams);
-        $total = $totalResult['total'];
+        $total = ($totalResult && isset($totalResult['total'])) ? (int)$totalResult['total'] : 0;
         
         return [
             'data' => $data,
@@ -304,26 +304,34 @@ class Product extends Model {
      * @return array
      */
     public function getStats() {
-        $stats = [];
-        
-        // Tổng số sản phẩm
-        $stats['total'] = $this->count(['deleted_at' => null]);
-        
-        // Sản phẩm active
-        $stats['active'] = $this->count(['status' => 'active', 'deleted_at' => null]);
-        
-        // Sản phẩm hết hàng
-        $sql = "SELECT COUNT(*) as total FROM {$this->table} 
-                WHERE stock_quantity <= min_stock_level 
-                AND track_inventory = 1 
-                AND deleted_at IS NULL";
-        $result = $this->db->selectOne($sql);
-        $stats['low_stock'] = $result['total'];
-        
-        // Sản phẩm nổi bật
-        $stats['featured'] = $this->count(['is_featured' => 1, 'deleted_at' => null]);
-        
-        return $stats;
-    }
+    $stats = [];
+
+    // Tổng số sản phẩm (chưa bị xóa mềm)
+    $sqlTotal = "SELECT COUNT(*) as total FROM {$this->table} WHERE deleted_at IS NULL";
+    $resTotal = $this->db->selectOne($sqlTotal);
+    $stats['total'] = ($resTotal && isset($resTotal['total'])) ? (int)$resTotal['total'] : 0;
+
+    // Sản phẩm active
+    $sqlActive = "SELECT COUNT(*) as total FROM {$this->table} 
+                  WHERE status = 'active' AND deleted_at IS NULL";
+    $resActive = $this->db->selectOne($sqlActive);
+    $stats['active'] = ($resActive && isset($resActive['total'])) ? (int)$resActive['total'] : 0;
+
+    // Sản phẩm sắp hết hàng (tồn kho <= min_stock_level)
+    $sqlLowStock = "SELECT COUNT(*) as total FROM {$this->table} 
+                    WHERE stock_quantity <= 9               
+                    AND deleted_at IS NULL";
+    $resLowStock = $this->db->selectOne($sqlLowStock);
+    $stats['low_stock'] = ($resLowStock && isset($resLowStock['total'])) ? (int)$resLowStock['total'] : 0;
+
+    // Sản phẩm nổi bật
+    $sqlFeatured = "SELECT COUNT(*) as total FROM {$this->table} 
+                    WHERE is_featured = 1 AND deleted_at IS NULL";
+    $resFeatured = $this->db->selectOne($sqlFeatured);
+    $stats['featured'] = ($resFeatured && isset($resFeatured['total'])) ? (int)$resFeatured['total'] : 0;
+
+    return $stats;
+}
+
 }
 ?>

@@ -64,10 +64,10 @@
       </div>
     <?php else: ?>
       <div class="text-center py-5">
-        <img src="<?php echo Helper::asset('images/empty-state.svg'); ?>" alt="Empty" class="mb-4" style="max-width:150px;">
+        <img src="<?php echo Helper::asset('images/empty-state.jpg'); ?>" alt="Empty" class="mb-4" style="max-width:300px;">
         <h4 class="fw-semibold mb-3">Danh sách yêu thích trống</h4>
         <p class="text-muted mb-4">Hãy tìm kiếm và thêm sản phẩm để theo dõi nhé!</p>
-        <a href="<?php echo Helper::url('product'); ?>" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold">
+        <a href="<?php echo Helper::url('home/productList'); ?>" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold">
           <i class="fas fa-store me-2"></i> Xem sản phẩm
         </a>
       </div>

@@ -1,0 +1,93 @@
+/* Tiêu đề */
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, #007bff, #6610f2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 2rem;
+}
+
+/* Card sản phẩm */
+.product-card {
+  border: none;
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+}
+
+/* Hình sản phẩm */
+.product-card img {
+  transition: transform 0.4s ease;
+  border-bottom: 1px solid #f1f1f1;
+}
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Tên sản phẩm */
+.product-card .card-title a {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #212529;
+  transition: color 0.3s ease;
+}
+.product-card .card-title a:hover {
+  color: #0d6efd;
+  text-decoration: underline;
+}
+
+/* Nút xem chi tiết */
+.product-card .btn {
+  border-radius: 50px;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+}
+.product-card .btn-primary {
+  background: linear-gradient(45deg, #0d6efd, #6610f2);
+  border: none;
+}
+.product-card .btn-primary:hover {
+  background: linear-gradient(45deg, #6610f2, #0d6efd);
+  transform: scale(1.05);
+}
+
+/* Bộ lọc */
+form select.form-select {
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ced4da;
+  transition: all 0.3s ease;
+}
+form select.form-select:hover {
+  border-color: #0d6efd;
+}
+
+/* Wishlist button */
+.wishlist-btn {
+  width: 42px;
+  height: 42px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(6px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: #dc3545;
+}
+.wishlist-btn:hover {
+  background: #dc3545;
+  color: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}

@@ -81,7 +81,7 @@
 
 <style>
   input.form-control:focus {
-  border-color: #198754; /* màu xanh lá của Bootstrap */
+  border-color: #198754;
   box-shadow: 0 0 0 0.2rem rgba(25,135,84,.25);
   }
   button.btn-success:hover {

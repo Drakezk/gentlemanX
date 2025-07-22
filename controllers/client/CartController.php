@@ -24,7 +24,7 @@ class CartController extends Controller {
         ], 'client');
     }
 
-    public function add() {
+    public function add($productId = null) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userId = $_SESSION['user']['id'] ?? null;
             $sessionId = $userId ? null : $this->currentSessionId();
@@ -33,7 +33,21 @@ class CartController extends Controller {
             $qty = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
 
             $this->cartItemModel->addItem($userId, $sessionId, $productId, $qty);
+
+            Helper::redirect('cart');
+            return;
         }
+
+        // Cho phép gọi trực tiếp qua URL (GET)
+        if ($productId) {
+            $userId    = $_SESSION['user']['id'] ?? null;
+            $sessionId = $userId ? null : session_id();
+
+            $this->cartItemModel->addItem($userId, $sessionId, (int)$productId, 1);
+            Helper::redirect('cart');
+            return;
+        }
+        
         Helper::redirect('cart');
     }
 

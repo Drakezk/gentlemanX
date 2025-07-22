@@ -1,3 +1,13 @@
+<?php
+if (!class_exists('CartItem')) {
+    require_once __DIR__ . '/../../../models/CartItem.php';
+}
+$cartItemModel = new CartItem();
+$userId = $_SESSION['user']['id'] ?? null;
+$sessionId = session_id();
+$cartCount = $cartItemModel->countItems($userId, $sessionId);
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -13,36 +23,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo Helper::asset('css/client.css') ?>">
-    <style>
-        #mainHeader {
-    transition: transform 0.3s ease-in-out;
-    z-index: 1030; /* cao hơn nav */
-}
-
-        /* Logo */
-            .logo span {
-                color: #007bff;
-            }
-
-            /* Navigation hover */
-            .nav-link:hover {
-                color: #007bff !important;
-            }
-
-            /* Search bar responsive spacing */
-            .search-bar input {
-                border-radius: 4px;
-            }
-
-            /* Header icons spacing */
-            .header-actions i {
-                transition: color 0.3s ease;
-            }
-
-            .header-actions i:hover {
-                color: #007bff;
-            }
-    </style>
+    <link rel="stylesheet" href="<?php echo Helper::asset('css/header.css') ?>">
 </head>
 <body>
     <!-- Header -->
@@ -109,7 +90,7 @@
         <div class="container">
             <ul class="nav justify-content-center fw-semibold flex-wrap">
                 <li class="nav-item"><a class="nav-link text-dark" href="<?php echo Helper::url() ?>">Trang chủ</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="<?php echo Helper::url('home/productList') ?>">Áo sơ mi</a></li>
+                <li class="nav-item"><a class="nav-link text-dark" href="#">Áo sơ mi</a></li>
                 <li class="nav-item"><a class="nav-link text-dark" href="#">Vest & Blazer</a></li>
                 <li class="nav-item"><a class="nav-link text-dark" href="#">Quần tây</a></li>
                 <li class="nav-item"><a class="nav-link text-dark" href="#">Giày da</a></li>
@@ -120,23 +101,6 @@
     </nav>
 </header>
 
-<script>
-    let lastScrollTop = 0;
-    const header = document.getElementById("mainHeader");
-
-    window.addEventListener("scroll", function () {
-        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-        if (currentScroll > lastScrollTop) {
-            // Cuộn xuống
-            header.style.transform = "translateY(-100%)";
-        } else {
-            // Cuộn lên
-            header.style.transform = "translateY(0)";
-        }
-
-        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // tránh lỗi âm
-    });
-</script>
+<script src="<?php echo Helper::asset('js/header.js'); ?>"></script>
 
 <main>

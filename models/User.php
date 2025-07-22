@@ -137,30 +137,38 @@ class User extends Model {
      * @return array
      */
     public function getStats() {
-        $stats = [];
-        
-        // Tổng số users
-        $stats['total'] = $this->count(['deleted_at' => null]);
-        
-        // Số customers
-        $stats['customers'] = $this->count(['role' => 'customer', 'deleted_at' => null]);
-        
-        // Số admins
-        $stats['admins'] = $this->count(['role' => 'admin', 'deleted_at' => null]);
-        
-        // Users active
-        $stats['active'] = $this->count(['status' => 'active', 'deleted_at' => null]);
-        
-        // Users đăng ký trong tháng
-        $sql = "SELECT COUNT(*) as total FROM {$this->table} 
-                WHERE MONTH(created_at) = MONTH(CURRENT_DATE()) 
-                AND YEAR(created_at) = YEAR(CURRENT_DATE()) 
-                AND deleted_at IS NULL";
-        $result = $this->db->selectOne($sql);
-        $stats['this_month'] = $result['total'];
-        
-        return $stats;
-    }
+    $stats = [];
+
+    // Tổng số users (chưa xóa mềm)
+    $sqlTotal = "SELECT COUNT(*) as total FROM {$this->table} WHERE deleted_at IS NULL";
+    $resTotal = $this->db->selectOne($sqlTotal);
+    $stats['total'] = ($resTotal && isset($resTotal['total'])) ? (int)$resTotal['total'] : 0;
+
+    // Số customers
+    $sqlCustomers = "SELECT COUNT(*) as total FROM {$this->table} WHERE role = 'customer' AND deleted_at IS NULL";
+    $resCustomers = $this->db->selectOne($sqlCustomers);
+    $stats['customers'] = ($resCustomers && isset($resCustomers['total'])) ? (int)$resCustomers['total'] : 0;
+
+    // Số admins
+    $sqlAdmins = "SELECT COUNT(*) as total FROM {$this->table} WHERE role = 'admin' AND deleted_at IS NULL";
+    $resAdmins = $this->db->selectOne($sqlAdmins);
+    $stats['admins'] = ($resAdmins && isset($resAdmins['total'])) ? (int)$resAdmins['total'] : 0;
+
+    // Users đang active
+    $sqlActive = "SELECT COUNT(*) as total FROM {$this->table} WHERE status = 'active' AND deleted_at IS NULL";
+    $resActive = $this->db->selectOne($sqlActive);
+    $stats['active'] = ($resActive && isset($resActive['total'])) ? (int)$resActive['total'] : 0;
+
+    // Users đăng ký trong tháng này
+    $sqlThisMonth = "SELECT COUNT(*) as total FROM {$this->table}
+                     WHERE MONTH(created_at) = MONTH(CURRENT_DATE())
+                     AND YEAR(created_at) = YEAR(CURRENT_DATE())
+                     AND deleted_at IS NULL";
+    $resMonth = $this->db->selectOne($sqlThisMonth);
+    $stats['this_month'] = ($resMonth && isset($resMonth['total'])) ? (int)$resMonth['total'] : 0;
+
+    return $stats;
+}
     
     /**
      * Xóa mềm user

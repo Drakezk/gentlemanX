@@ -1,5 +1,7 @@
 <?php include 'views/client/layouts/header.php'; ?>
 
+<link rel="stylesheet" href="<?php echo Helper::asset('css/list.css') ?>">
+
 <section class="product-listing py-5">
   <div class="container">
     <h1 class="text-center mb-4 fw-bold">Tất cả sản phẩm</h1>
@@ -109,36 +111,4 @@
   </div>
 </section>
 
-<style>
-  .wishlist-btn {
-    width: 42px;
-    height: 42px;
-    background: rgba(255,255,255,0.9);
-    backdrop-filter: blur(4px);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    transition: all 0.3s ease;
-    text-decoration: none;
-    color: #dc3545; /* màu đỏ mặc định */
-}
-
-.wishlist-btn:hover {
-    background: #dc3545;
-    color: #fff;
-    transform: scale(1.1);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-/* Nếu muốn trạng thái đã yêu thích thì thêm class active */
-.wishlist-btn.active {
-    background: #dc3545;
-    color: #fff;
-}
-.wishlist-btn.active:hover {
-    background: #b52d3a;
-}
-</style>
 <?php include 'views/client/layouts/footer.php'; ?>
