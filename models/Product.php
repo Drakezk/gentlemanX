@@ -333,5 +333,79 @@ class Product extends Model {
     return $stats;
 }
 
+// Lấy danh sách
+    public function getAll($conditions = [], $orderBy = '', $limit = 0, $offset = 0) {
+        $sql = "SELECT * FROM {$this->table} WHERE deleted_at IS NULL";
+        $params = [];
+
+        if (!empty($conditions)) {
+            foreach ($conditions as $field => $value) {
+                $sql .= " AND {$field} = ?";
+                $params[] = $value;
+            }
+        }
+
+        if ($orderBy) {
+            $sql .= " ORDER BY {$orderBy}";
+        }
+
+        if ($limit > 0) {
+            $sql .= " LIMIT {$limit}";
+            if ($offset > 0) {
+                $sql .= " OFFSET {$offset}";
+            }
+        }
+
+        return $this->db->select($sql, $params);
+    }
+
+    // Lấy 1 sản phẩm theo id
+    public function getById($id) {
+        $sql = "SELECT * FROM {$this->table} WHERE id = ? AND deleted_at IS NULL";
+        return $this->db->selectOne($sql, [$id]);
+    }
+
+    // Tạo mới
+    public function create($data) {
+    // Lọc theo fillable
+    $filtered = array_intersect_key($data, array_flip($this->fillable));
+
+    // Xử lý gallery nếu là mảng
+    if (isset($filtered['gallery']) && is_array($filtered['gallery'])) {
+        $filtered['gallery'] = json_encode($filtered['gallery'], JSON_UNESCAPED_UNICODE);
+    }
+
+    $fields = array_keys($filtered);
+    $placeholders = implode(',', array_fill(0, count($fields), '?'));
+    $columns = implode(',', $fields);
+
+    $values = array_values($filtered);
+
+    $sql = "INSERT INTO {$this->table} ({$columns}) VALUES ({$placeholders})";
+    return $this->db->insert($sql, $values);
+}
+
+    // Cập nhật
+public function update($id, $data) {
+    $fields = [];
+    $params = [];
+
+    foreach ($data as $column => $value) {
+        $fields[] = "`$column` = ?";
+        $params[] = $value;
+    }
+
+    $params[] = $id;
+    $sql = "UPDATE {$this->table} SET " . implode(', ', $fields) . " WHERE id = ?";
+    return $this->db->execute($sql, $params);
+}
+
+
+    // Xóa mềm
+    public function deleteProduct($id) {
+        $sql = "UPDATE {$this->table} SET deleted_at = NOW() WHERE id = ?";
+        return $this->db->execute($sql, [$id]);
+    }
+
 }
 ?>

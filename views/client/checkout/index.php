@@ -33,30 +33,6 @@
               <hr class="my-4">
 
               <h5 class="mb-3">Địa chỉ giao hàng</h5>
-              <div class="mb-3">
-                <label class="form-label">Tên người nhận</label>
-                <input type="text" name="shipping_name" class="form-control" required>
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Số điện thoại người nhận</label>
-                <input type="text" name="shipping_phone" class="form-control" required>
-              </div>
-
-              <div class="row">
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">Tỉnh/TP</label>
-                  <input type="text" name="shipping_province" class="form-control" required>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">Quận/Huyện</label>
-                  <input type="text" name="shipping_district" class="form-control" required>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">Phường/Xã</label>
-                  <input type="text" name="shipping_ward" class="form-control" required>
-                </div>
-              </div>
 
               <div class="mb-3">
                 <label class="form-label">Địa chỉ chi tiết</label>

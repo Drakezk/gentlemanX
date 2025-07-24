@@ -21,7 +21,7 @@ class Order extends Model {
     // Tạo đơn hàng mới
     public function createOrder($data) {
         $sql = "INSERT INTO {$this->table} 
-            (user_id, order_number, subtotal, shipping_fee, tax_amount, discount_amount, total_amount, status, payment_status, payment_method)
+            (user_id, order_number, subtotal, shipping_fee, discount_amount, total_amount, status, payment_status, payment_method, shipping_address)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         return $this->db->insert($sql, [
@@ -29,12 +29,12 @@ class Order extends Model {
             $data['order_number'],
             $data['subtotal'],
             $data['shipping_fee'],
-            $data['tax_amount'],
             $data['discount_amount'],
             $data['total_amount'],
             $data['status'],
             $data['payment_status'],
-            $data['payment_method']
+            $data['payment_method'],
+            $data['shipping_address']
         ]);
     }
 }

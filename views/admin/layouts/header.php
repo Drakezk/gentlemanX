@@ -34,14 +34,14 @@
                     <ul class="collapse list-unstyled" id="productSubmenu">
                         <li><a href="<?php echo Helper::url('admin/product/index') ?>">Danh sách sản phẩm</a></li>
                         <li><a href="<?php echo Helper::url('admin/product/create') ?>">Thêm sản phẩm</a></li>
-                        <li><a href="<?php echo Helper::url('admin/category') ?>">Danh mục</a></li>
+                        <li><a href="<?php echo Helper::url('admin/category/index') ?>">Danh mục</a></li>
                         <li><a href="<?php echo Helper::url('admin/brand') ?>">Thương hiệu</a></li>
                     </ul>
                 </li>
                 
                 <!-- Orders Management -->
                 <li>
-                    <a href="<?php echo Helper::url('admin/order') ?>">
+                    <a href="<?php echo Helper::url('admin/order/index') ?>">
                         <i class="fas fa-shopping-cart"></i> Quản lý đơn hàng
                     </a>
                 </li>
@@ -52,8 +52,14 @@
                         <i class="fas fa-users"></i> Quản lý người dùng
                     </a>
                     <ul class="collapse list-unstyled" id="userSubmenu">
-                        <li><a href="<?php echo Helper::url('admin/user') ?>">Khách hàng</a></li>
-                        <li><a href="<?php echo Helper::url('admin/admin') ?>">Quản trị viên</a></li>
+                        <li><a href="<?php echo Helper::url('admin/user/customers') ?>">Khách hàng</a></li>
+                        <?php if (isset($currentUser) && $currentUser['id'] == 1): ?>
+                            <li>
+                                <a href="<?php echo Helper::url('admin/ad/admins') ?>">
+                                    Quản trị viên
+                                </a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </li>
                 

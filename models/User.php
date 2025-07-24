@@ -206,5 +206,55 @@ class User extends Model {
         $result = $this->db->selectOne($sql, $params);
         return $result['total'] > 0;
     }
+
+    // Lấy tất cả user (bỏ qua deleted_at)
+    public function getAllUsers() {
+        $sql = "SELECT * FROM {$this->table} WHERE deleted_at IS NULL ORDER BY created_at DESC";
+        return $this->db->select($sql);
+    }
+
+    // Lấy 1 user
+    public function getUser($id) {
+        $sql = "SELECT * FROM {$this->table} WHERE {$this->primaryKey} = ? AND deleted_at IS NULL";
+        return $this->db->selectOne($sql, [$id]);
+    }
+
+    // Thêm mới user
+    public function createUser($data) {
+        // Tự động bổ sung thời gian
+        $data['created_at'] = date('Y-m-d H:i:s');
+        $data['updated_at'] = date('Y-m-d H:i:s');
+
+        // Chuẩn bị cột và giá trị
+        $fields = array_keys($data);
+        $placeholders = array_fill(0, count($fields), '?');
+        $sql = "INSERT INTO {$this->table} (" . implode(',', $fields) . ") VALUES (" . implode(',', $placeholders) . ")";
+        $values = array_values($data);
+
+        return $this->db->insert($sql, $values);
+    }
+
+    // Cập nhật user
+    public function updateUser($id, $data) {
+        // Xây dựng câu lệnh UPDATE thủ công
+        $fields = [];
+        $params = [];
+
+        foreach ($data as $key => $value) {
+            $fields[] = "`$key` = ?";
+            $params[] = $value;
+        }
+
+        $sql = "UPDATE {$this->table} SET " . implode(', ', $fields) . " WHERE {$this->primaryKey} = ?";
+        $params[] = $id;
+
+        return $this->db->execute($sql, $params);
+    }
+
+    // Xóa mềm user
+    public function deleteUser($id) {
+        $sql = "DELETE FROM {$this->table} WHERE {$this->primaryKey} = ?";
+        return $this->db->execute($sql, [$id]);
+    }
 }
 ?>

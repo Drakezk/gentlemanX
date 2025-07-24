@@ -110,5 +110,32 @@ class Category extends Model {
         $result = $this->db->selectOne($sql, [$categoryId]);
         return $result['total'];
     }
+
+    /**
+     * Quan ly danh mục
+     */
+    public function create($data) {
+        $fields = array_keys($data);
+        $placeholders = array_fill(0, count($fields), '?');
+        $sql = "INSERT INTO {$this->table} (".implode(',', $fields).") VALUES (".implode(',', $placeholders).")";
+        return $this->db->execute($sql, array_values($data));
+    }
+
+    public function update($id, $data) {
+        $fields = [];
+        $params = [];
+        foreach ($data as $k => $v) {
+            $fields[] = "`$k`=?";
+            $params[] = $v;
+        }
+        $params[] = $id;
+        $sql = "UPDATE {$this->table} SET ".implode(',', $fields)." WHERE id=?";
+        return $this->db->execute($sql, $params);
+    }
+
+    public function delete($id) {
+        $sql = "DELETE FROM {$this->table} WHERE id=?";
+        return $this->db->execute($sql, [$id]);
+    }
 }
 ?>

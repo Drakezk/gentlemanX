@@ -25,10 +25,10 @@ class Controller {
         // Extract data để sử dụng trong view
         extract($data);
         
-        // Thêm các biến global
-        $auth = $this->auth;
-        $currentUser = $this->auth->user();
-        $isLoggedIn = $this->auth->check();
+        // // Thêm các biến global
+        // $auth = $this->auth;
+        // $currentUser = $this->auth->user();
+        // $isLoggedIn = $this->auth->check();
         
         // Xác định đường dẫn view
         $viewPath = "views/{$layout}/{$view}.php";
@@ -177,10 +177,10 @@ class Controller {
      */
     protected function requireAdmin() {
         if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
-        $_SESSION['error'] = 'Bạn không có quyền truy cập trang quản trị.';
-        Helper::redirect('auth/showLogin'); // hoặc admin/login
-        exit();
-    }
+            $_SESSION['error'] = 'Bạn không có quyền truy cập trang quản trị.';
+            Helper::redirect('auth/showLogin'); // hoặc admin/login
+            exit();
+        }
     }
     
     /**

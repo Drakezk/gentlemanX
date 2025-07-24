@@ -3,6 +3,7 @@
 <div class="container py-4">
     <h1 class="mb-4">Thêm sản phẩm mới</h1>
 
+    <!-- Form thêm sản phẩm -->
     <form method="POST" action="" enctype="multipart/form-data">
         <div class="row mb-3">
             <div class="col-md-6">
@@ -59,8 +60,15 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <label class="form-label">Ảnh đại diện (đường dẫn)</label>
-                <input type="text" name="featured_image" class="form-control">
+                <label class="form-label">Ảnh đại diện</label>
+                <!-- upload 1 file -->
+                <input type="file" name="featured_image" class="form-control">
+            </div>
+            <div class="col-md-9">
+                <label class="form-label">Bộ sưu tập ảnh (gallery)</label>
+                <!-- upload nhiều file -->
+                <input type="file" name="gallery[]" class="form-control" multiple>
+                <small class="text-muted">Chọn nhiều ảnh cùng lúc (Ctrl + Click)</small>
             </div>
         </div>
 

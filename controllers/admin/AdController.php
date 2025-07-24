@@ -1,19 +1,19 @@
 <?php
-class UserController extends Controller {
+class AdController extends Controller {
     private $userModel;
 
     public function __construct() {
         $this->userModel = $this->model('User');
     }
 
-    // Trang danh sách Khách hàng
-    public function customers() {
-        $users = $this->userModel->getAll(['role' => 'customer']);
+    // Trang danh sách Admin
+    public function admins() {
+        $users = $this->userModel->getAll(['role' => 'admin']);
         $data = [
-            'title' => 'Danh sách Khách hàng',
+            'title' => 'Danh sách Quản trị viên',
             'users' => $users
         ];
-        $this->view('users/customers', $data, 'admin');
+        $this->view('users/admins', $data, 'admin');
     }
 
     // Thêm người dùng
@@ -33,7 +33,7 @@ class UserController extends Controller {
             }
 
             $this->userModel->createUser($data);
-            Helper::redirect('admin/user/customers');
+            Helper::redirect('admin/user/admins');
         }
 
         $this->view('users/create', ['title' => 'Thêm người dùng'], 'admin');
@@ -61,7 +61,7 @@ class UserController extends Controller {
             }
 
             $this->userModel->updateUser($id, $data);
-            Helper::redirect('admin/user/customers');
+            Helper::redirect('admin/user/admins');
         }
 
         $this->view('users/edit', [
@@ -73,7 +73,7 @@ class UserController extends Controller {
     // Xóa người dùng
     public function delete($id) {
         $this->userModel->deleteUser($id);
-        Helper::redirect('admin/user/customers');
+        Helper::redirect('admin/user/admins');
     }
 
 }

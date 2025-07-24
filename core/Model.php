@@ -224,5 +224,18 @@ class Model {
     public function raw($sql, $params = []) {
         return $this->db->select($sql, $params);
     }
+
+    // Trong class Model
+public function insert($data) {
+    $fields = array_keys($data);
+    $placeholders = implode(',', array_fill(0, count($fields), '?'));
+    $columns = implode(',', $fields);
+
+    $values = array_values($data);
+
+    $sql = "INSERT INTO {$this->table} ({$columns}) VALUES ({$placeholders})";
+    return $this->db->insert($sql, $values); // giả sử Database class có insert
+}
+
 }
 ?>

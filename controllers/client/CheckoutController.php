@@ -33,7 +33,6 @@ class CheckoutController extends Controller {
             'cartItems' => $cartItems,
             'subtotal' => $subtotal,
             'shipping_fee' => 30000,
-            'tax_amount' => 0,
             'discount_amount' => 0,
             'total_amount' => $subtotal + 30000
         ];
@@ -88,7 +87,7 @@ class CheckoutController extends Controller {
                         'order_id'      => $orderId,
                         'product_id'    => $item['product_id'],
                         'product_name'  => $item['name'],
-                        'product_sku'   => $item['sku'] ?? '', // nếu có sku
+                        'product_sku'   => $item['sku'] ?? '',
                         'product_image' => $item['featured_image'] ?? '',
                         'unit_price'    => $item['price'],
                         'quantity'      => $item['quantity'],

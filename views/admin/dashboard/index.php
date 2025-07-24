@@ -180,15 +180,6 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <?php if ($user['avatar']): ?>
-                                                    <img src="<?php echo Helper::upload($user['avatar']) ?>" 
-                                                         class="rounded-circle me-2" width="32" height="32">
-                                                <?php else: ?>
-                                                    <div class="bg-secondary rounded-circle me-2 d-flex align-items-center justify-content-center" 
-                                                         style="width: 32px; height: 32px;">
-                                                        <i class="fas fa-user text-white"></i>
-                                                    </div>
-                                                <?php endif; ?>
                                                 <?php echo Helper::e($user['name']) ?>
                                             </div>
                                         </td>

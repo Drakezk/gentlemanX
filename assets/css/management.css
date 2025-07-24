@@ -1,0 +1,42 @@
+.card-header.bg-gradient-primary {
+  background: linear-gradient(90deg, #0d6efd, #6610f2);
+  color: #fff;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.3s ease;
+}
+
+.btn-outline-warning:hover {
+  background: #ffc107;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn-outline-danger:hover {
+  background: #dc3545;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+img.rounded-3.shadow-sm {
+  transition: transform 0.3s ease;
+}
+img.rounded-3.shadow-sm:hover {
+  transform: scale(1.1);
+}
+
+.card-header a.btn.btn-light {
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.card-header a.btn.btn-light:hover {
+  background: #fff;
+  color: #0d6efd;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
