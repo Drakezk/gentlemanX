@@ -32,10 +32,25 @@ class Router {
         $params = array_slice($url, 2);
         
         // Xử lý các route đặc biệt
-        if ($controllerName === 'Product' && isset($url[1]) && $url[1] !== 'category') {
-            // URL: /product/slug-san-pham -> ProductController::detail($slug)
-            $actionName = 'detail';
-            $params = [$url[1]];
+        if ($controllerName === 'Product') {
+        // Nếu có tham số thứ 2
+            if (isset($url[1])) {
+                // Nếu là search thì giữ nguyên
+                if ($url[1] === 'search') {
+                    $actionName = 'search';
+                    $params = array_slice($url, 2);
+                }
+                // Nếu là category thì bạn xử lý riêng (nếu cần)
+                elseif ($url[1] === 'category') {
+                    $actionName = 'category';
+                    $params = array_slice($url, 2);
+                }
+                // Ngược lại coi như slug sản phẩm -> detail
+                else {
+                    $actionName = 'detail';
+                    $params = [$url[1]];
+                }
+            }
         } elseif ($controllerName === 'Category' && isset($url[1])) {
             // URL: /category/slug-danh-muc -> CategoryController::products($slug)
             $actionName = 'products';

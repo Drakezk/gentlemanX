@@ -2,7 +2,7 @@
 class CartItem extends Model {
     protected $table = 'cart_items';
 
-    // ✅ Lấy danh sách giỏ hàng cho user hoặc session
+    //  Lấy danh sách giỏ hàng cho user hoặc session
     public function getCartItems($userId = null, $sessionId = null) {
         if ($userId) {
             $sql = "SELECT c.id, c.quantity, 
@@ -21,12 +21,12 @@ class CartItem extends Model {
         }
     }
 
-    // ✅ Hàm cũ của bạn vẫn giữ nguyên, chỉ rename nhẹ nếu muốn
+    //  Hàm cũ vẫn giữ nguyên, chỉ rename nhẹ nếu muốn
     public function getByUserOrSession($userId = null, $sessionId = null) {
         return $this->getCartItems($userId, $sessionId);
     }
 
-    // ✅ Thêm sản phẩm vào giỏ
+    //  Thêm sản phẩm vào giỏ
     public function addItem($userId, $sessionId, $productId, $quantity = 1) {
         $whereField = $userId ? 'user_id' : 'session_id';
         $whereValue = $userId ?: $sessionId;
@@ -50,7 +50,7 @@ class CartItem extends Model {
         }
     }
 
-    // ✅ Xóa item khỏi giỏ
+    //  Xóa item khỏi giỏ
     public function removeItem($id, $userId = null, $sessionId = null) {
         if ($userId) {
             $this->db->execute("DELETE FROM {$this->table} WHERE id = ? AND user_id = ?", [$id, $userId]);
@@ -59,7 +59,7 @@ class CartItem extends Model {
         }
     }
 
-    // ✅ Cập nhật số lượng
+    //  Cập nhật số lượng
     public function updateItem($id, $quantity, $userId = null, $sessionId = null) {
         if ($userId) {
             $this->db->execute(
@@ -74,7 +74,7 @@ class CartItem extends Model {
         }
     }
 
-    // ✅ Đếm tổng số item trong giỏ
+    //  Đếm tổng số item trong giỏ
     public function countItems($userId = null, $sessionId = null) {
         if ($userId) {
             $res = $this->db->selectOne(
@@ -90,7 +90,7 @@ class CartItem extends Model {
         return $res && $res['total'] ? (int)$res['total'] : 0;
     }
 
-    // ✅ Xóa toàn bộ giỏ (sau khi checkout)
+    //  Xóa toàn bộ giỏ (sau khi checkout)
     public function clearCart($userId = null, $sessionId = null) {
         if ($userId) {
             return $this->db->execute("DELETE FROM {$this->table} WHERE user_id = ?", [$userId]);

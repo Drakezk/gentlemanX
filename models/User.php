@@ -219,6 +219,12 @@ class User extends Model {
         return $this->db->selectOne($sql, [$id]);
     }
 
+    public function find($id) {
+        $sql = "SELECT * FROM users WHERE id = ?";
+        return $this->db->selectOne($sql, [$id]);
+    }
+
+
     // Thêm mới user
     public function createUser($data) {
         // Tự động bổ sung thời gian

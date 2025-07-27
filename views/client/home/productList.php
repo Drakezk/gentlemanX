@@ -9,21 +9,25 @@
     <!-- Bộ lọc & sắp xếp (tùy chọn) -->
     <div class="row mb-4">
       <div class="col-md-3">
-        <!-- Bộ lọc theo danh mục -->
-        <form method="GET" action="">
-          <div class="mb-3">
-            <label class="form-label fw-semibold">Danh mục</label>
-            <select name="category" class="form-select" onchange="this.form.submit()">
-              <option value="">Tất cả</option>
-              <?php foreach ($categories as $category): ?>
-                <option value="<?php echo $category['slug']; ?>" 
-                  <?php echo (isset($_GET['category']) && $_GET['category']==$category['slug']) ? 'selected' : ''; ?>>
-                  <?php echo Helper::e($category['name']); ?>
-                </option>
-              <?php endforeach; ?>
-            </select>
-          </div>
+        <!-- Bộ lọc theo khoảng giá -->
+        <form method="GET" action="" class="mb-3">
+          <?php if(isset($_GET['category'])): ?>
+            <input type="hidden" name="category" value="<?php echo $_GET['category']; ?>">
+          <?php endif; ?>
+          <?php if(isset($_GET['sort'])): ?>
+            <input type="hidden" name="sort" value="<?php echo $_GET['sort']; ?>">
+          <?php endif; ?>
+
+          <label class="form-label fw-semibold">Khoảng giá</label>
+          <select name="price_range" class="form-select" onchange="this.form.submit()">
+            <option value="">Tất cả</option>
+            <option value="under_500" <?php if(@$_GET['price_range']=='under_500') echo 'selected'; ?>>Dưới 500k</option>
+            <option value="500_1000" <?php if(@$_GET['price_range']=='500_1000') echo 'selected'; ?>>500k - 1tr</option>
+            <option value="1000_2000" <?php if(@$_GET['price_range']=='1000_2000') echo 'selected'; ?>>1tr - 2tr</option>
+            <option value="above_2000" <?php if(@$_GET['price_range']=='above_2000') echo 'selected'; ?>>Trên 2tr</option>
+          </select>
         </form>
+
       </div>
 
       <div class="col-md-9 d-flex justify-content-end">

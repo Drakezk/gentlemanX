@@ -32,6 +32,7 @@ class AuthController extends Controller {
         Helper::redirect('auth/showLogin');
     }
 
+    // Lấy user từ DB
     $user = $this->userModel->getByEmail($email);
     if (!$user) {
         $_SESSION['error'] = 'Email không tồn tại!';
@@ -48,11 +49,13 @@ class AuthController extends Controller {
         Helper::redirect('auth/showLogin');
     }
 
-    $_SESSION['user'] = [
-        'id' => $user['id'],
-        'name' => $user['name'],
+    // Lưu session sau khi đăng nhập thành công
+    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['user'] = [               
+        'id'    => $user['id'],
+        'name'  => $user['name'],
         'email' => $user['email'],
-        'role' => $user['role']
+        'role'  => $user['role']
     ];
 
     $this->userModel->update($user['id'], ['last_login_at' => date('Y-m-d H:i:s')]);

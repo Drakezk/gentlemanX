@@ -25,6 +25,13 @@ class OrderController extends Controller {
             return;
         }
 
+        // Chặn chỉnh sửa nếu đã xác nhận hoặc đã hủy
+        if (in_array($order['status'], ['confirmed','cancelled'])) {
+            // Bạn có thể redirect hoặc báo lỗi
+            $_SESSION['error'] = 'Đơn hàng đã xác nhận hoặc đã hủy, không thể chỉnh sửa!';
+            Helper::redirect('admin/order/index');
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $updateData = [
                 'status' => $_POST['status'],

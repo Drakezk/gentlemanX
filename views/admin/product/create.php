@@ -1,90 +1,113 @@
 <?php include 'views/admin/layouts/header.php'; ?>
 
+<link rel="stylesheet" href="<?php echo Helper::asset('css/create.css') ?>">
+
 <div class="container py-4">
-    <h1 class="mb-4">Thêm sản phẩm mới</h1>
+  <div class="card shadow-sm border-0 rounded-4">
+    <!-- Header -->
+    <div class="card-header bg-gradient-primary text-white rounded-top-4 d-flex justify-content-between align-items-center">
+      <h3 class="mb-0 fw-bold">
+        <i class="fas fa-plus-circle me-2"></i>Thêm sản phẩm mới
+      </h3>
+      <a href="<?php echo Helper::url('admin/product/index'); ?>" 
+         class="btn btn-light btn-sm fw-semibold rounded-pill shadow-sm d-flex align-items-center gap-2">
+        <i class="fas fa-arrow-left"></i> Quay lại
+      </a>
+    </div>
 
-    <!-- Form thêm sản phẩm -->
-    <form method="POST" action="" enctype="multipart/form-data">
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label class="form-label">Tên sản phẩm</label>
-                <input type="text" name="name" class="form-control" required>
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Slug</label>
-                <input type="text" name="slug" class="form-control">
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Mã SKU</label>
-                <input type="text" name="sku" class="form-control">
-            </div>
+    <!-- Body -->
+    <div class="card-body">
+      <form method="POST" action="" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Tên sản phẩm <span class="text-danger">*</span></label>
+            <input type="text" name="name" class="form-control rounded-3" required>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Slug</label>
+            <input type="text" name="slug" class="form-control rounded-3">
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Mã SKU</label>
+            <input type="text" name="sku" class="form-control rounded-3">
+          </div>
         </div>
 
-        <div class="row mb-3">
-            <div class="col-md-3">
-                <label class="form-label">Danh mục (category_id)</label>
-                <input type="number" name="category_id" class="form-control">
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Thương hiệu (brand_id)</label>
-                <input type="number" name="brand_id" class="form-control">
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Giá bán</label>
-                <input type="number" name="price" class="form-control">
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Giá gốc</label>
-                <input type="number" name="compare_price" class="form-control">
-            </div>
+        <div class="row g-3 mb-3">
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Danh mục</label>
+            <input type="number" name="category_id" class="form-control rounded-3">
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Thương hiệu</label>
+            <input type="number" name="brand_id" class="form-control rounded-3">
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Giá bán</label>
+            <input type="number" name="price" class="form-control rounded-3">
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Giá gốc</label>
+            <input type="number" name="compare_price" class="form-control rounded-3">
+          </div>
         </div>
 
-        <div class="row mb-3">
-            <div class="col-md-3">
-                <label class="form-label">Tồn kho</label>
-                <input type="number" name="stock_quantity" class="form-control">
+        <div class="row g-3 mb-3">
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Tồn kho</label>
+            <input type="number" name="stock_quantity" class="form-control rounded-3">
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Trạng thái</label>
+            <select name="status" class="form-select rounded-3">
+              <option value="active">Hoạt động</option>
+              <option value="inactive">Ẩn</option>
+            </select>
+          </div>
+          <div class="col-md-3 d-flex align-items-center">
+            <div class="form-check mt-4">
+              <input class="form-check-input" type="checkbox" name="is_featured" value="1" id="is_featured">
+              <label class="form-check-label fw-semibold" for="is_featured">
+                Nổi bật
+              </label>
             </div>
-            <div class="col-md-3">
-                <label class="form-label">Trạng thái</label>
-                <select name="status" class="form-select">
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                </select>
-            </div>
-            <div class="col-md-3 d-flex align-items-center">
-                <div class="form-check mt-4">
-                    <input class="form-check-input" type="checkbox" name="is_featured" value="1" id="is_featured">
-                    <label class="form-check-label" for="is_featured">
-                        Nổi bật
-                    </label>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Ảnh đại diện</label>
-                <!-- upload 1 file -->
-                <input type="file" name="featured_image" class="form-control">
-            </div>
-            <div class="col-md-9">
-                <label class="form-label">Bộ sưu tập ảnh (gallery)</label>
-                <!-- upload nhiều file -->
-                <input type="file" name="gallery[]" class="form-control" multiple>
-                <small class="text-muted">Chọn nhiều ảnh cùng lúc (Ctrl + Click)</small>
-            </div>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Ảnh đại diện</label>
+            <input type="file" name="featured_image" class="form-control rounded-3">
+          </div>
+          <div class="col-md-9">
+            <label class="form-label fw-semibold">Bộ sưu tập ảnh</label>
+            <input type="file" name="gallery[]" class="form-control rounded-3" multiple>
+            <small class="text-muted">Giữ Ctrl để chọn nhiều ảnh.</small>
+          </div>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Mô tả ngắn</label>
-            <textarea name="short_description" class="form-control" rows="2"></textarea>
+          <label class="form-label fw-semibold">Mô tả ngắn</label>
+          <textarea name="short_description" class="form-control rounded-3" rows="2"></textarea>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Mô tả chi tiết</label>
-            <textarea name="description" class="form-control" rows="4"></textarea>
+          <label class="form-label fw-semibold">Mô tả chi tiết</label>
+          <textarea name="description" class="form-control rounded-3" rows="4"></textarea>
         </div>
 
-        <button type="submit" class="btn btn-success">Lưu sản phẩm</button>
-        <a href="<?php echo Helper::url('admin/product/index'); ?>" class="btn btn-secondary">Quay lại</a>
-    </form>
+        <div class="d-flex justify-content-end gap-2">
+          <button type="submit" class="btn btn-success fw-semibold rounded-pill px-4 shadow-sm">
+            <i class="fas fa-save me-1"></i> Lưu sản phẩm
+          </button>
+          <a href="<?php echo Helper::url('admin/product/index'); ?>" 
+             class="btn btn-secondary fw-semibold rounded-pill px-4 shadow-sm">
+            <i class="fas fa-times me-1"></i> Hủy
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
 <?php include 'views/admin/layouts/footer.php'; ?>

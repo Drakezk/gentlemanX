@@ -1,39 +1,66 @@
 <?php include 'views/admin/layouts/header.php'; ?>
+
+<link rel="stylesheet" href="<?php echo Helper::asset('css/management.css') ?>">
+
 <div class="container py-4">
-    <h1 class="mb-3">Quản lý danh mục</h1>
-    <a href="<?php echo Helper::url('admin/category/create'); ?>" class="btn btn-success mb-3">Thêm danh mục</a>
-    <table class="table table-bordered table-hover align-middle">
-        <thead class="table-light">
-            <tr>
-                <th>ID</th>
-                <th>Tên</th>
-                <th>Slug</th>
-                <th>Mô tả</th>
-                <th>Thứ tự</th>
-                <th>Trạng thái</th>
-                <th>Hành động</th>
+  <div class="card shadow-sm border-0 rounded-4">
+    <!-- Header -->
+    <div class="card-header bg-gradient-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
+      <h3 class="mb-0 fw-bold">
+        <i class="fas fa-list-alt me-2"></i>Quản lý danh mục
+      </h3>
+      <a href="<?php echo Helper::url('admin/category/create'); ?>" 
+         class="btn btn-light btn-sm fw-semibold rounded-pill shadow-sm">
+        <i class="fas fa-plus me-1"></i> Thêm danh mục
+      </a>
+    </div>
+
+    <!-- Body -->
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table align-middle table-hover mb-0">
+          <thead class="table-light">
+            <tr class="text-center">
+              <th>ID</th>
+              <th>Tên</th>
+              <th>Slug</th>
+              <th>Mô tả</th>
+              <th>Thứ tự</th>
+              <th>Trạng thái</th>
+              <th>Hành động</th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             <?php foreach($categories as $c): ?>
-                <tr>
-                    <td><?= $c['id'] ?></td>
-                    <td><?= Helper::e($c['name']) ?></td>
-                    <td><?= Helper::e($c['slug']) ?></td>
-                    <td><?= Helper::e($c['description']) ?></td>
-                    <td><?= $c['sort_order'] ?></td>
-                    <td>
-                        <span class="badge bg-<?= $c['status']=='active'?'success':'secondary'; ?>">
-                            <?= $c['status'] ?>
-                        </span>
-                    </td>
-                    <td>
-                        <a href="<?= Helper::url('admin/category/edit/'.$c['id']); ?>" class="btn btn-warning btn-sm">Sửa</a>
-                        <a href="<?= Helper::url('admin/category/delete/'.$c['id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Xóa danh mục?');">Xóa</a>
-                    </td>
-                </tr>
+              <tr>
+                <td class="text-center fw-semibold"><?= $c['id'] ?></td>
+                <td class="fw-bold text-primary"><?= Helper::e($c['name']) ?></td>
+                <td class="text-muted"><?= Helper::e($c['slug']) ?></td>
+                <td class="text-wrap"><?= Helper::e($c['description']) ?></td>
+                <td class="text-center"><?= $c['sort_order'] ?></td>
+                <td class="text-center">
+                  <span class="badge px-3 py-2 rounded-pill bg-<?= $c['status']=='active'?'success':'secondary'; ?>">
+                    <?= $c['status']=='active'?'Hoạt động':'Ẩn'; ?>
+                  </span>
+                </td>
+                <td class="text-center">
+                  <a href="<?= Helper::url('admin/category/edit/'.$c['id']); ?>" 
+                     class="btn btn-sm btn-outline-warning rounded-pill me-1 px-3">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a href="<?= Helper::url('admin/category/delete/'.$c['id']); ?>" 
+                     class="btn btn-sm btn-outline-danger rounded-pill px-3"
+                     onclick="return confirm('Xóa danh mục?');">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
             <?php endforeach; ?>
-        </tbody>
-    </table>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
+
 <?php include 'views/admin/layouts/footer.php'; ?>

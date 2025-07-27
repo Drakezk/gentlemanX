@@ -95,28 +95,36 @@ class Product extends Model {
      * @return array
      */
     public function getFiltered($filters = [], $orderBy = 'p.created_at DESC') {
-    $sql = "SELECT p.*, c.name as category_name, b.name as brand_name
-            FROM {$this->table} p
-            LEFT JOIN categories c ON p.category_id = c.id
-            LEFT JOIN brands b ON p.brand_id = b.id
-            WHERE p.status = 'active' AND p.deleted_at IS NULL";
+        $sql = "SELECT p.*, c.name as category_name, b.name as brand_name
+                FROM {$this->table} p
+                LEFT JOIN categories c ON p.category_id = c.id
+                LEFT JOIN brands b ON p.brand_id = b.id
+                WHERE p.status = 'active' AND p.deleted_at IS NULL";
 
-    $params = [];
+        $params = [];
 
-    // Nếu lọc theo danh mục
-    if (isset($filters['category_id'])) {
-        $sql .= " AND p.category_id = ?";
-        $params[] = $filters['category_id'];
+        // Lọc theo danh mục
+        if (isset($filters['category_id'])) {
+            $sql .= " AND p.category_id = ?";
+            $params[] = $filters['category_id'];
+        }
+
+        // Lọc theo khoảng giá (nếu có)
+        if (isset($filters['price_min'])) {
+            $sql .= " AND p.price >= ?";
+            $params[] = $filters['price_min'];
+        }
+
+        if (isset($filters['price_max'])) {
+            $sql .= " AND p.price <= ?";
+            $params[] = $filters['price_max'];
+        }
+
+        // Thêm sắp xếp
+        $sql .= " ORDER BY $orderBy";
+
+        return $this->db->select($sql, $params);
     }
-
-    // Bạn có thể thêm các filter khác như brand_id, price range ở đây nếu cần
-
-    // Thêm sắp xếp
-    $sql .= " ORDER BY $orderBy";
-
-    return $this->db->select($sql, $params);
-}
-
     
     /**
      * Lấy sản phẩm nổi bật
@@ -161,60 +169,82 @@ class Product extends Model {
      * @return array
      */
     public function search($keyword, $page = 1, $perPage = 12, $filters = []) {
-        $offset = ($page - 1) * $perPage;
-        $searchTerm = "%{$keyword}%";
-        
-        $sql = "SELECT p.*, c.name as category_name, b.name as brand_name
-                FROM {$this->table} p
-                LEFT JOIN categories c ON p.category_id = c.id
-                LEFT JOIN brands b ON p.brand_id = b.id
-                WHERE (p.name LIKE ? OR p.short_description LIKE ? OR p.sku LIKE ?)
-                AND p.status = 'active' AND p.deleted_at IS NULL";
-        
-        $params = [$searchTerm, $searchTerm, $searchTerm];
-        
-        // Thêm filters
-        if (isset($filters['category_id'])) {
-            $sql .= " AND p.category_id = ?";
-            $params[] = $filters['category_id'];
-        }
-        
-        if (isset($filters['brand_id'])) {
-            $sql .= " AND p.brand_id = ?";
-            $params[] = $filters['brand_id'];
-        }
-        
-        $sql .= " ORDER BY p.created_at DESC LIMIT {$perPage} OFFSET {$offset}";
-        
-        $data = $this->db->select($sql, $params);
-        
-        // Đếm tổng số
-        $countSql = "SELECT COUNT(*) as total FROM {$this->table} p
-                     WHERE (p.name LIKE ? OR p.short_description LIKE ? OR p.sku LIKE ?)
-                     AND p.status = 'active' AND p.deleted_at IS NULL";
-        $countParams = [$searchTerm, $searchTerm, $searchTerm];
-        
-        if (isset($filters['category_id'])) {
-            $countSql .= " AND p.category_id = ?";
-            $countParams[] = $filters['category_id'];
-        }
-        
-        if (isset($filters['brand_id'])) {
-            $countSql .= " AND p.brand_id = ?";
-            $countParams[] = $filters['brand_id'];
-        }
-        
-        $totalResult = $this->db->selectOne($countSql, $countParams);
-        $total = ($totalResult && isset($totalResult['total'])) ? (int)$totalResult['total'] : 0;
-        
-        return [
-            'data' => $data,
-            'current_page' => $page,
-            'per_page' => $perPage,
-            'total' => $total,
-            'last_page' => ceil($total / $perPage)
-        ];
+    $offset = ($page - 1) * $perPage;
+    $kw = trim($keyword);
+
+    // Các pattern LIKE để match nguyên từ
+    $params = [
+        $kw . ' %',       // từ ở đầu câu
+        '% ' . $kw,       // từ ở cuối câu
+        '% ' . $kw . ' %', // từ ở giữa câu
+        $kw . '%'         // bắt đầu bằng từ khóa
+    ];
+
+    $sql = "SELECT p.*, c.name as category_name, b.name as brand_name
+            FROM {$this->table} p
+            LEFT JOIN categories c ON p.category_id = c.id
+            LEFT JOIN brands b ON p.brand_id = b.id
+            WHERE (
+                p.name LIKE ? 
+                OR p.name LIKE ? 
+                OR p.name LIKE ?
+                OR p.name LIKE ?
+            )
+            AND p.status = 'active' AND p.deleted_at IS NULL";
+
+    // Thêm filters
+    if (isset($filters['category_id'])) {
+        $sql .= " AND p.category_id = ?";
+        $params[] = $filters['category_id'];
     }
+
+    if (isset($filters['brand_id'])) {
+        $sql .= " AND p.brand_id = ?";
+        $params[] = $filters['brand_id'];
+    }
+
+    $sql .= " ORDER BY p.created_at DESC LIMIT {$perPage} OFFSET {$offset}";
+
+    $data = $this->db->select($sql, $params);
+
+    // Đếm tổng số
+    $countSql = "SELECT COUNT(*) as total FROM {$this->table} p
+                 WHERE (
+                    p.name LIKE ? 
+                    OR p.name LIKE ? 
+                    OR p.name LIKE ?
+                    OR p.name LIKE ?
+                 )
+                 AND p.status = 'active' AND p.deleted_at IS NULL";
+    $countParams = [
+        $kw . ' %',
+        '% ' . $kw,
+        '% ' . $kw . ' %',
+        $kw . '%'
+    ];
+
+    if (isset($filters['category_id'])) {
+        $countSql .= " AND p.category_id = ?";
+        $countParams[] = $filters['category_id'];
+    }
+
+    if (isset($filters['brand_id'])) {
+        $countSql .= " AND p.brand_id = ?";
+        $countParams[] = $filters['brand_id'];
+    }
+
+    $totalResult = $this->db->selectOne($countSql, $countParams);
+    $total = ($totalResult && isset($totalResult['total'])) ? (int)$totalResult['total'] : 0;
+
+    return [
+        'data' => $data,
+        'current_page' => $page,
+        'per_page' => $perPage,
+        'total' => $total,
+        'last_page' => ceil($total / $perPage)
+    ];
+}
+
     
     /**
      * Cập nhật số lượt xem
@@ -386,19 +416,19 @@ class Product extends Model {
 }
 
     // Cập nhật
-public function update($id, $data) {
-    $fields = [];
-    $params = [];
+    public function update($id, $data) {
+        $fields = [];
+        $params = [];
 
-    foreach ($data as $column => $value) {
-        $fields[] = "`$column` = ?";
-        $params[] = $value;
+        foreach ($data as $column => $value) {
+            $fields[] = "`$column` = ?";
+            $params[] = $value;
+        }
+
+        $params[] = $id;
+        $sql = "UPDATE {$this->table} SET " . implode(', ', $fields) . " WHERE id = ?";
+        return $this->db->execute($sql, $params);
     }
-
-    $params[] = $id;
-    $sql = "UPDATE {$this->table} SET " . implode(', ', $fields) . " WHERE id = ?";
-    return $this->db->execute($sql, $params);
-}
 
 
     // Xóa mềm

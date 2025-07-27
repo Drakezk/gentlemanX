@@ -35,6 +35,8 @@
                 <td class="text-center">
                   <?php if ($order['status'] == 'confirmed'): ?>
                     <span class="badge bg-success px-3 py-2 rounded-pill">Đã xác nhận</span>
+                  <?php elseif ($order['status'] == 'cancelled'): ?>
+                    <span class="badge bg-danger px-3 py-2 rounded-pill">Đã hủy</span>
                   <?php else: ?>
                     <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">Đang xử lý</span>
                   <?php endif; ?>
@@ -49,10 +51,12 @@
                 <td class="text-center small text-muted"><?php echo $order['created_at']; ?></td>
                 <td class="text-center small text-muted"><?php echo $order['updated_at']; ?></td>
                 <td class="text-center">
-                  <a href="<?php echo Helper::url('admin/order/edit/' . $order['id']); ?>" 
-                     class="btn btn-sm btn-outline-warning rounded-pill me-1 px-3">
-                    <i class="fas fa-edit"></i>
-                  </a>
+                  <?php if (!in_array($order['status'], ['confirmed','cancelled'])): ?>
+                    <a href="<?php echo Helper::url('admin/order/edit/' . $order['id']); ?>" 
+                      class="btn btn-sm btn-outline-warning rounded-pill me-1 px-3">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                  <?php endif; ?>                 
                   <a href="<?php echo Helper::url('admin/order/delete/' . $order['id']); ?>" 
                      class="btn btn-sm btn-outline-danger rounded-pill px-3"
                      onclick="return confirm('Xác nhận xóa?');">
