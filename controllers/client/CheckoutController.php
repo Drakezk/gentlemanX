@@ -56,13 +56,8 @@ class CheckoutController extends Controller {
                 'order_number' => 'ORD' . time(),
                 'customer_name' => $_POST['customer_name'],
                 'customer_email' => $_POST['customer_email'],
-                'customer_phone' => $_POST['customer_phone'],
-
-                'shipping_name' => $_POST['shipping_name'],
-                'shipping_phone' => $_POST['shipping_phone'],
-                'shipping_province' => $_POST['shipping_province'],
-                'shipping_district' => $_POST['shipping_district'],
-                'shipping_ward' => $_POST['shipping_ward'],
+                
+                'shipping_phone' => $_POST['customer_phone'],
                 'shipping_address' => $_POST['shipping_address'],
                 'shipping_postal_code' => $_POST['shipping_postal_code'],
 
@@ -114,6 +109,7 @@ class CheckoutController extends Controller {
         ], 'client');
     }
 
+    // Trang chi tiết đơn hàng
     public function detail($id) {
         $userId = $_SESSION['user']['id'] ?? null;
         if (!$userId) {
@@ -139,4 +135,32 @@ class CheckoutController extends Controller {
 
         $this->view('home/orderDetail', $data, 'client');
     }
+
+    public function cancel($id) {
+        $userId = $_SESSION['user']['id'] ?? null;
+        if (!$userId) {
+            Helper::redirect('auth/showLogin');
+            return;
+        }
+
+        // Lấy đơn hàng
+        $order = $this->orderModel->getByIdAndUser($id, $userId);
+        if (!$order) {
+            echo "<h3 class='text-danger'>Đơn hàng không tồn tại hoặc không thuộc về bạn!</h3>";
+            return;
+        }
+
+        // Chỉ cho phép hủy khi pending
+        if ($order['status'] !== 'pending') {
+            echo "<h3 class='text-warning'>Đơn hàng đã xử lý, không thể hủy!</h3>";
+            return;
+        }
+
+        $this->orderModel->cancelOrder($id, $userId);
+
+        // Quay về trang account
+        $_SESSION['flash'] = "Hủy đơn hàng thành công!";
+        Helper::redirect('auth/account');
+    }
+
 }

@@ -7,11 +7,13 @@
 class ProductController extends Controller {
     private $productModel;
     private $categoryModel;
+    private $reviewModel;
     
     public function __construct() {
         parent::__construct();
         $this->productModel = $this->model('Product');
         $this->categoryModel = $this->model('Category');
+        $this->reviewModel = $this->model('Review');
     }
     
     /**
@@ -76,11 +78,16 @@ class ProductController extends Controller {
         // Lấy breadcrumb
         $breadcrumb = $this->categoryModel->getBreadcrumb($product['category_id']);
         
+        $reviews = $this->reviewModel->getByProductId($product['id']);
+        $reviewStats = $this->reviewModel->getStatsByProductId($product['id']);
+
         $data = [
             'title' => $product['name'],
             'product' => $product,
             'relatedProducts' => $relatedProducts,
-            'breadcrumb' => $breadcrumb
+            'breadcrumb' => $breadcrumb,
+            'reviews' => $reviews,
+            'reviewStats' => $reviewStats
         ];
         
         $this->view('home/detail', $data, 'client');

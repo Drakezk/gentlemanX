@@ -132,4 +132,31 @@
   <?php endif; ?>
 </div>
 
+<?php if (!empty($_SESSION['flash'])): ?>
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+  <div id="flashToast" class="toast align-items-center text-bg-success border-0" 
+       role="alert" data-bs-autohide="true" data-bs-delay="3000">
+    <div class="d-flex">
+      <div class="toast-body">
+        <i class="fas fa-check-circle me-2"></i><?php echo $_SESSION['flash']; ?>
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+<?php unset($_SESSION['flash']); ?>
+<?php endif; ?>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var toastEl = document.getElementById('flashToast');
+    if (toastEl) {
+      var toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+      toast.show(); // Hiển thị toast và tự ẩn sau delay
+    }
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <?php include 'views/client/layouts/footer.php'; ?>

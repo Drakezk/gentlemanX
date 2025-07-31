@@ -1,10 +1,14 @@
 <?php include 'views/client/layouts/header.php'; ?>
 
+<link rel="stylesheet" href="<?php echo Helper::asset('css/detail.css') ?>">
+
+<?php $isLoggedIn = !empty($_SESSION['user']); ?>
+
 <section class="product-detail py-5 bg-light">
   <div class="container">
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-4">
-      <ol class="breadcrumb bg-white p-3 rounded-3 shadow-sm">
+      <ol class="breadcrumb bg-body-tertiary p-3 rounded-3 shadow-sm align-items-center">
         <li class="breadcrumb-item"><a href="<?php echo Helper::url(''); ?>">Trang chủ</a></li>
         <?php if (!empty($breadcrumb)): ?>
           <?php foreach ($breadcrumb as $item): ?>
@@ -99,19 +103,101 @@
           <?php if (!empty($_SESSION['user'])): ?>
             <form method="POST" action="<?php echo Helper::url('cart/add'); ?>" class="m-0">
               <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
-              <button class="btn btn-lg btn-primary rounded-pill shadow-sm hover-scale w-100">
+              <button class="btn btn-lg btn-gradient rounded-pill w-100">
                 <i class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng
               </button>
             </form>
           <?php else: ?>
             <!-- Chưa login, click sẽ đưa sang login -->
             <a href="<?php echo Helper::url('auth/login'); ?>"
-              class="btn btn-lg btn-primary rounded-pill shadow-sm hover-scale w-100 d-flex align-items-center justify-content-center">
+              class="btn btn-lg btn-gradient rounded-pill w-100">
               <i class="fas fa-sign-in-alt me-2"></i> Đăng nhập để mua
             </a>
           <?php endif; ?>
         </div>
       </div>
+    </div>
+
+    <!-- Đánh giá sản phẩm -->
+    <hr class="my-5">
+    <div class="reviews">
+      <h3 class="fw-bold mb-4">
+        <i class="fas fa-comments text-primary me-2"></i> Đánh giá sản phẩm
+      </h3>
+        <div class="card shadow-sm mb-5">
+          <div class="card-body">
+            <h5 class="fw-bold mb-3">Gửi đánh giá của bạn</h5>
+            <form action="<?php echo Helper::url('review/submit/' . $product['slug']); ?>" method="POST" enctype="multipart/form-data">
+              <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Tiêu đề</label>
+                <input type="text" name="title" class="form-control" placeholder="Tiêu đề ngắn gọn">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Đánh giá</label>
+                <textarea name="comment" class="form-control" rows="4" placeholder="Viết đánh giá của bạn..."></textarea>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Số sao</label>
+                <div class="star-rating d-flex gap-1">
+                  <?php for ($i = 1; $i <= 5; $i++): ?>
+                    <input type="radio" name="rating" value="<?= $i ?>" id="star<?= $i ?>" class="d-none star-input">
+                    <label for="star<?= $i ?>" class="star-icon" data-index="<?= $i ?>">
+                      <i class="fas fa-star"></i>
+                    </label>
+                  <?php endfor; ?>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Hình ảnh (tối đa 3)</label>
+                <input type="file" name="images[]" multiple class="form-control">
+              </div>
+
+              <button type="submit" class="btn btn-primary rounded-pill">
+                <i class="fas fa-paper-plane me-2"></i> Gửi đánh giá
+              </button>
+            </form>
+          </div>
+        </div>
+
+      <?php if (!empty($reviews)): ?>
+        <?php foreach ($reviews as $review): ?>
+          <div class="card mb-3 review-card rounded-4">
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-2">
+                <div>
+                  <strong><?php echo htmlspecialchars($review['user_name']); ?></strong>
+                  <span class="text-muted small ms-2"><?php echo date('d/m/Y', strtotime($review['created_at'])); ?></span>
+                </div>
+                <div class="text-warning">
+                  <?php for ($i = 1; $i <= 5; $i++): ?>
+                    <i class="fas fa-star<?php echo $i <= $review['rating'] ? '' : '-o'; ?>"></i>
+                  <?php endfor; ?>
+                </div>
+              </div>
+              <h6 class="fw-semibold"><?php echo htmlspecialchars($review['title']); ?></h6>
+              <p class="mb-2"><?php echo nl2br(htmlspecialchars($review['comment'])); ?></p>
+
+              <?php 
+                $images = json_decode($review['images'], true) ?? []; 
+                if (!empty($images) && is_array($images)):
+              ?>
+                <div class="d-flex flex-wrap gap-2">
+                  <?php foreach ($images as $img): ?>
+                    <img src="<?php echo Helper::upload($img); ?>" alt="Ảnh đánh giá" class="rounded shadow-sm" style="width: 80px; height: 80px; object-fit: cover;">
+                  <?php endforeach; ?>
+                </div>
+              <?php endif; ?>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p class="text-muted">Chưa có đánh giá nào cho sản phẩm này.</p>
+      <?php endif; ?>
     </div>
 
     <!-- Sản phẩm liên quan -->
@@ -165,35 +251,37 @@
   </div>
 </section>
 
-<style>
-  .product-main-img {
-    transition: transform 0.4s ease;
-  }
-  .product-main-img:hover {
-    transform: scale(1.05);
-  }
-  .hover-scale {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .hover-scale:hover {
-    transform: scale(1.03);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-  }
-  .hover-shadow:hover {
-    transform: translateY(-3px);
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-  }
-  .thumb-img {
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
-  }
+<?php
+$types = ['error' => 'danger', 'success' => 'success'];
+foreach ($types as $key => $color):
+  if (!empty($_SESSION[$key])):
+?>
+  <div class="position-fixed top-0 end-0 p-3" style="z-index: 9999">
+    <div class="toast align-items-center text-bg-<?php echo $color; ?> border-0 show shadow" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          <?php if ($key === 'success'): ?>
+            <i class="fas fa-check-circle me-2"></i>
+          <?php elseif ($key === 'error'): ?>
+            <i class="fas fa-exclamation-circle me-2"></i>
+          <?php endif; ?>
+          <?php echo $_SESSION[$key]; ?>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+<?php
+    unset($_SESSION[$key]);
+  endif;
+endforeach;
+?>
 
-  .thumb-img:hover {
-    transform: scale(1.1);    
-    box-shadow: 0 0 10px rgba(13,110,253,0.5);
-    cursor: pointer;
-  }
-</style>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  window.isLoggedIn = <?php echo json_encode($isLoggedIn); ?>;
+  window.loginUrl = '<?php echo Helper::url("auth/showLogin"); ?>';
+</script>
+<script src="<?php echo Helper::asset('js/detail.js'); ?>"></script>
 
 <?php include 'views/client/layouts/footer.php'; ?>

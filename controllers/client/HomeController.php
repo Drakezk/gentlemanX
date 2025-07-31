@@ -120,7 +120,7 @@ class HomeController extends Controller {
             'content' => 'Đây là trang giới thiệu về chúng tôi.'
         ];
         
-        $this->view('home/about', $data, 'client');
+        $this->view('home/contact', $data, 'client');
     }
     
     /**

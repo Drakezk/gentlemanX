@@ -51,17 +51,18 @@
                 <td class="text-center small text-muted"><?php echo $order['created_at']; ?></td>
                 <td class="text-center small text-muted"><?php echo $order['updated_at']; ?></td>
                 <td class="text-center">
-                  <?php if (!in_array($order['status'], ['confirmed','cancelled'])): ?>
+                  <?php if (in_array($order['status'], ['confirmed', 'cancelled'])): ?>
+                    <a href="<?php echo Helper::url('admin/order/delete/' . $order['id']); ?>" 
+                      class="btn btn-sm btn-outline-danger rounded-pill px-3"
+                      onclick="return confirm('Xác nhận xóa đơn hàng này?');">
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  <?php else: ?>
                     <a href="<?php echo Helper::url('admin/order/edit/' . $order['id']); ?>" 
-                      class="btn btn-sm btn-outline-warning rounded-pill me-1 px-3">
+                      class="btn btn-sm btn-outline-warning rounded-pill px-3">
                       <i class="fas fa-edit"></i>
                     </a>
-                  <?php endif; ?>                 
-                  <a href="<?php echo Helper::url('admin/order/delete/' . $order['id']); ?>" 
-                     class="btn btn-sm btn-outline-danger rounded-pill px-3"
-                     onclick="return confirm('Xác nhận xóa?');">
-                    <i class="fas fa-trash"></i>
-                  </a>
+                  <?php endif; ?>
                 </td>
               </tr>
             <?php endforeach; ?>

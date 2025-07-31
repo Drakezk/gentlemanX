@@ -9,7 +9,7 @@
       <h3 class="mb-0 fw-bold">
         <i class="fas fa-user-plus me-2"></i> Thêm người dùng
       </h3>
-      <a href="<?php echo Helper::url('admin/user/index'); ?>" 
+      <a href="<?php echo Helper::url('admin/user/customers'); ?>" 
          class="btn btn-light btn-sm fw-semibold rounded-pill shadow-sm d-flex align-items-center gap-2">
         <i class="fas fa-arrow-left"></i> Quay lại
       </a>

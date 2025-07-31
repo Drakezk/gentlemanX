@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="<?php echo Helper::asset('css/management.css') ?>">
 
-<div class="container py-4">
+<div class="product-management container py-4">
   <div class="card shadow-sm border-0 rounded-4">
     <div class="card-header bg-gradient-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
       <h3 class="mb-0 fw-bold"><i class="fas fa-box-open me-2"></i>Quản lý sản phẩm</h3>

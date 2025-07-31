@@ -15,13 +15,13 @@
               <div class="mb-3">
                 <label class="form-label">Họ và tên</label>
                 <input type="text" name="customer_name" class="form-control" 
-                       value="<?php echo isset($user['name']) ? Helper::e($user['name']) : ''; ?>" required>
+                       value="<?php echo isset($user['name']) ? Helper::e($user['name']) : ''; ?>" readonly>
               </div>
 
               <div class="mb-3">
                 <label class="form-label">Email</label>
                 <input type="email" name="customer_email" class="form-control" 
-                       value="<?php echo isset($user['email']) ? Helper::e($user['email']) : ''; ?>" required>
+                       value="<?php echo isset($user['email']) ? Helper::e($user['email']) : ''; ?>" readonly>
               </div>
 
               <div class="mb-3">
@@ -40,7 +40,7 @@
               </div>
 
               <div class="mb-3">
-                <label class="form-label">Mã bưu điện (nếu có)</label>
+                <label class="form-label">Mã giảm giá (nếu có)</label>
                 <input type="text" name="shipping_postal_code" class="form-control">
               </div>
 

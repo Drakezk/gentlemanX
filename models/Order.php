@@ -14,15 +14,18 @@ class Order extends Model {
 
     // Nếu cần lấy chi tiết theo id và user
     public function getByIdAndUser($id, $userId) {
-        $sql = "SELECT * FROM {$this->table} WHERE {$this->primaryKey} = ? AND user_id = ?";
+        $sql = "SELECT o.*, u.name AS user_name, u.phone AS user_phone
+                FROM {$this->table} o
+                LEFT JOIN users u ON o.user_id = u.id
+                WHERE o.{$this->primaryKey} = ? AND o.user_id = ?";
         return $this->db->selectOne($sql, [$id, $userId]);
     }
 
     // Tạo đơn hàng mới
     public function createOrder($data) {
         $sql = "INSERT INTO {$this->table} 
-            (user_id, order_number, subtotal, shipping_fee, discount_amount, total_amount, status, payment_status, payment_method, shipping_address)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            (user_id, order_number, subtotal, shipping_fee, discount_amount, total_amount, status, payment_status, payment_method, shipping_address, shipping_phone)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         return $this->db->insert($sql, [
             $data['user_id'],
@@ -34,7 +37,14 @@ class Order extends Model {
             $data['status'],
             $data['payment_status'],
             $data['payment_method'],
-            $data['shipping_address']
+            $data['shipping_address'],
+            $data['shipping_phone']
         ]);
     }
+
+    public function cancelOrder($id, $userId) {
+        $sql = "UPDATE {$this->table} SET status = 'cancelled' WHERE id = ? AND user_id = ?";
+        return $this->db->execute($sql, [$id, $userId]);
+    }
+
 }

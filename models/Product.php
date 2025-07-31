@@ -430,7 +430,6 @@ class Product extends Model {
         return $this->db->execute($sql, $params);
     }
 
-
     // Xóa mềm
     public function deleteProduct($id) {
         $sql = "UPDATE {$this->table} SET deleted_at = NOW() WHERE id = ?";

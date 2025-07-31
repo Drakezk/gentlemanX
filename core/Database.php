@@ -177,5 +177,6 @@ class Database {
         $result = $this->selectOne($sql, $params);
         return $result ? (int)$result['total'] : 0;
     }
+    
 }
 ?>
