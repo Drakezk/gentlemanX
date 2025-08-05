@@ -8,7 +8,12 @@ class ContactController extends Controller {
 
     // Trang liên hệ
     public function index() {
-        $this->view('contact/index', [], 'client');
+        $messages = [];
+        if (!empty($_SESSION['user'])) {
+            $userId = $_SESSION['user']['id'];
+            $messages = $this->contactModel->getMessagesByUserId($userId);
+        }
+        $this->view('contact/index', ['messages' => $messages], 'client');
     }
 
     // Gửi liên hệ
@@ -22,7 +27,7 @@ class ContactController extends Controller {
 
             if (empty($name) || empty($email) || empty($subject) || empty($message)) {
                 $_SESSION['error'] = 'Vui lòng điền đầy đủ thông tin.';
-                return $this->view('contact/index', [], 'client');
+                return Helper::redirect('contact/index');
             }
 
             $data = [
@@ -38,7 +43,7 @@ class ContactController extends Controller {
             // Lưu vào CSDL
             $this->contactModel->createMessage($data);
             $_SESSION['success'] = "Liên hệ của bạn đã được gửi thành công!";
-            return $this->view('contact/index', [], 'client');
+            return Helper::redirect('contact/index');
         }
 
         // Nếu không phải POST

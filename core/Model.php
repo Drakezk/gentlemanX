@@ -91,14 +91,15 @@ class Model {
      * @return int|false - ID của record mới hoặc false nếu lỗi
      */
     public function create($data) {
-        // Lọc dữ liệu theo fillable
-        $data = $this->filterFillable($data);
         
         // Thêm timestamps
         if ($this->timestamps) {
             $data['created_at'] = date('Y-m-d H:i:s');
             $data['updated_at'] = date('Y-m-d H:i:s');
         }
+
+        // Lọc dữ liệu theo fillable
+        $data = $this->filterFillable($data);
         
         $fields = implode(',', array_keys($data));
         $placeholders = ':' . implode(', :', array_keys($data));

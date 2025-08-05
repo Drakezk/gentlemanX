@@ -37,6 +37,10 @@ class HomeController extends Controller {
         $this->view('home/index', $data, 'client');
     }
 
+    public function shop() {
+        $this->view('home/shop', [], 'client');
+    }
+
     /**
      * Danh sach sản phẩm
      */
@@ -107,35 +111,6 @@ class HomeController extends Controller {
         ];
 
         $this->view('home/productList', $data, 'client');
-    }
-
-
-    
-    /**
-     * Trang giới thiệu
-     */
-    public function about() {
-        $data = [
-            'title' => 'Giới thiệu',
-            'content' => 'Đây là trang giới thiệu về chúng tôi.'
-        ];
-        
-        $this->view('home/contact', $data, 'client');
-    }
-    
-    /**
-     * Trang liên hệ
-     */
-    public function contact() {
-        if ($this->isMethod('POST')) {
-            return $this->handleContactForm();
-        }
-        
-        $data = [
-            'title' => 'Liên hệ'
-        ];
-        
-        $this->view('home/contact', $data, 'client');
     }
     
     /**

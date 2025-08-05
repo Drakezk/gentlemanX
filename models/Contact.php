@@ -1,5 +1,6 @@
 <?php
 class Contact extends Model {
+    protected $timestamps = false;
     protected $table = 'contact_messages';
 
     protected $fillable = [
