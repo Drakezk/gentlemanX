@@ -67,7 +67,7 @@
     </div>
 
     <div class="footer-bottom mt-4">
-      &copy; 2024 GentlemanX. Bản quyền thuộc về GentlemanX Team.
+      &copy; 2025 GentlemanX. Bản quyền thuộc về Nguyễn Minh Khôi - PH56456 - Dự án 1.
     </div>
   </div>
 </footer>

@@ -12,7 +12,7 @@
                   Khẳng định đẳng cấp cùng <span class="brand-highlight">Gentleman-X</span>
                 </h1>
                 <p class="lead mb-4">
-                  BST mới 2024 – Chất liệu cao cấp, thiết kế lịch lãm, ưu đãi độc quyền dành cho quý ông hiện đại.
+                  BST mới 2025 – Chất liệu cao cấp, thiết kế lịch lãm, ưu đãi độc quyền dành cho quý ông hiện đại.
                 </p>
                 <a href="<?php echo Helper::url('home/productList') ?>" class="btn btn-light btn-lg rounded-pill">
                   Khám phá ngay
@@ -290,6 +290,32 @@
     </div>
 </section>
 <?php endif; ?>
+
+<?php if (!empty($_SESSION['success'])): ?>
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+  <div id="flashToast" class="toast align-items-center text-bg-success border-0" 
+       role="alert" data-bs-autohide="true" data-bs-delay="3000">
+    <div class="d-flex">
+      <div class="toast-body">
+        <i class="fas fa-check-circle me-2"></i><?php echo $_SESSION['success']; ?>
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+<?php unset($_SESSION['success']); ?>
+<?php endif; ?>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var toastEl = document.getElementById('flashToast');
+    if (toastEl) {
+      var toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+      toast.show(); // Hiển thị toast và tự ẩn sau delay
+    }
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
 <script>

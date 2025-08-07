@@ -24,6 +24,7 @@
               <th>ID</th>
               <th>Họ tên</th>
               <th>Email</th>
+              <th>Số điện thoại</th>
               <th>Trạng thái</th>
               <th>Thao tác</th>
             </tr>
@@ -40,9 +41,10 @@
                     <td class="text-center fw-semibold"><?php echo $user['id']; ?></td>
                     <td class="fw-bold text-primary"><?php echo Helper::e($user['name']); ?></td>
                     <td><?php echo Helper::e($user['email']); ?></td>
+                    <td class="text-center"><?php echo Helper::e($user['phone'] ?? ''); ?></td>
                     <td class="text-center">
                     <span class="badge px-3 py-2 rounded-pill bg-<?php echo $user['status']=='active'?'success':'secondary'; ?>">
-                        <?php echo ucfirst($user['status']); ?>
+                        <?php echo ucfirst($user['status']=='active'?'Hoạt động':'Khóa'); ?>
                     </span>
                     </td>
                     <td class="text-center">

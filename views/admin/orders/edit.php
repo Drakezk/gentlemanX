@@ -30,15 +30,6 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label fw-semibold">Trạng thái thanh toán</label>
-          <select name="payment_status" class="form-select rounded-3">
-            <option value="pending"  <?php echo $order['payment_status']=='pending'?'selected':''; ?>>Chưa thanh toán</option>
-            <option value="paid"     <?php echo $order['payment_status']=='paid'?'selected':''; ?>>Đã thanh toán</option>
-            <option value="refunded" <?php echo $order['payment_status']=='refunded'?'selected':''; ?>>Đã hoàn tiền</option>
-          </select>
-        </div>
-
-        <div class="mb-3">
           <label class="form-label fw-semibold">Địa chỉ giao hàng</label>
           <input type="text" name="shipping_address" 
                  class="form-control rounded-3" 

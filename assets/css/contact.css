@@ -1,0 +1,102 @@
+
+/* Font Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(to right, #0f172a, #1e293b);
+  color: #fff;
+  padding: 5rem 0;
+}
+
+.hero-section .btn {
+  transition: all 0.3s ease;
+  border-radius: 50px;
+}
+
+.hero-section .btn:hover {
+  background-color: #f43f5e;
+  color: #fff;
+}
+
+/* Service Highlights */
+.service-box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 1rem;
+  background-color: #f1f5f9;
+}
+
+.service-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.service-box i {
+  background-color: #e2e8f0;
+  color: #1e293b;
+  padding: 12px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+}
+
+/* Product & Category Cards */
+.card {
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.card img {
+  transition: transform 0.3s ease;
+}
+
+.card:hover img {
+  transform: scale(1.05);
+}
+
+/* Banner Overlay */
+.banner-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2));
+  position: absolute;
+  inset: 0;
+}
+
+/* Wishlist Button */
+.wishlist-btn i {
+  color: #e11d48;
+  transition: transform 0.3s ease;
+}
+
+.wishlist-btn:hover i {
+  transform: scale(1.2);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #0f172a;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 50px;
+  transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #f43f5e;
+}
+
+/* Responsive Fix */
+@media (max-width: 768px) {
+  .hero-section {
+    text-align: center;
+  }
+
+  .hero-section img {
+    margin-top: 2rem;
+  }
+}

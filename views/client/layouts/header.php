@@ -36,9 +36,9 @@ $cartCount = $cartItemModel->countItems($userId, $sessionId);
                 <span class="ms-3"><i class="fas fa-envelope me-1"></i> support@gentlemanx.com</span>
             </div>
             <div class="top-links mt-2 mt-md-0">
-                <a href="#" class="text-white text-decoration-none me-3">Theo dõi đơn hàng</a>
-                <a href="#" class="text-white text-decoration-none me-3">Tư vấn size</a>
-                <a href="<?php echo Helper::url('home/about') ?>" class="text-white text-decoration-none">Hỗ trợ</a>
+                <a href="<?php echo Helper::url('auth/account') ?>" class="text-white text-decoration-none me-3">Theo dõi đơn hàng</a>
+                <a href="<?php echo Helper::url('home/shop') ?>" class="text-white text-decoration-none me-3">Cửa hàng</a>
+                <a href="<?php echo Helper::url('contact/index') ?>" class="text-white text-decoration-none">Liên hệ</a>
             </div>
         </div>
     </div>
@@ -54,7 +54,7 @@ $cartCount = $cartItemModel->countItems($userId, $sessionId);
             <!-- Search bar -->
             <form action="<?php echo Helper::url('product/search') ?>" method="GET" class="search-bar d-flex mt-3 mt-md-0 flex-grow-1 mx-md-5" style="max-width: 500px;">
                 <input type="text" name="q" class="form-control" placeholder="Tìm kiếm sản phẩm thời trang nam..."
-                       value="<?php echo Helper::e($this->get('q', '')) ?>">
+                    value="<?php echo Helper::e($this->get('q', '')) ?>">
                 <button type="submit" class="btn btn-dark ms-2"><i class="fas fa-search"></i></button>
             </form>
 
@@ -89,16 +89,38 @@ $cartCount = $cartItemModel->countItems($userId, $sessionId);
     <nav class="nav bg-light border-top">
         <div class="container">
             <ul class="nav justify-content-center fw-semibold flex-wrap">
-                <li class="nav-item"><a class="nav-link text-dark" href="<?php echo Helper::url() ?>">Trang chủ</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="#">Áo sơ mi</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="#">Vest & Blazer</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="#">Quần tây</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="#">Giày da</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="#">Phụ kiện</a></li>
-                <li class="nav-item"><a class="nav-link text-danger" href="#">Sale</a></li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="<?php echo Helper::url(); ?>">Trang chủ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="<?php echo Helper::url('home/productList?category=ao-nam'); ?>">
+                        Áo
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="<?php echo Helper::url('home/productList?category=quan-nam'); ?>">
+                        Quần
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="<?php echo Helper::url('home/productList?category=giay-dep-nam'); ?>">
+                        Giày
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="<?php echo Helper::url('home/productList?category=phu-kien-nam'); ?>">
+                        Phụ kiện
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="<?php echo Helper::url('home/productList?sort='); ?>">
+                        Sale
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
+
 </header>
 
 <script src="<?php echo Helper::asset('js/header.js'); ?>"></script>

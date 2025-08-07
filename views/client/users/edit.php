@@ -3,6 +3,7 @@
 <!-- Animate.css -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link rel="stylesheet" href="<?php echo Helper::asset('css/account.css') ?>">
+<link rel="stylesheet" href="<?php echo Helper::asset('css/editinfo.css') ?>">
 
 <div class="container py-5">
   <!-- Tiêu đề trang -->
@@ -39,15 +40,43 @@
 
             <!-- Email -->
             <div class="mb-4">
-              <label class="form-label fw-semibold text-dark">
+              <label class="form-label fw-semibold text-dark d-flex align-items-center">
                 <i class="fas fa-envelope me-2 text-primary"></i>Email
+                <span class="badge bg-secondary ms-2">Chỉ xem</span>
               </label>
               <div class="input-group input-group-lg shadow-sm rounded-3">
                 <span class="input-group-text bg-white border-end-0">
                   <i class="fas fa-envelope text-secondary"></i>
                 </span>
-                <input type="email" name="email" class="form-control border-start-0"
-                       value="<?php echo htmlspecialchars($user['email']); ?>" required>
+                <input 
+                  type="email" 
+                  name="email" 
+                  value="<?= htmlspecialchars($user['email']) ?>" 
+                  class="form-control bg-light text-muted border-start-0" 
+                  readonly
+                >
+              </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold text-dark">
+                <i class="fas fa-phone-alt me-2 text-primary"></i>Số điện thoại
+              </label>
+              <div class="input-group input-group-lg shadow-sm rounded-3">
+                <span class="input-group-text bg-white border-end-0">
+                  <i class="fas fa-phone-alt text-secondary"></i>
+                </span>
+                <input
+                  type="text"
+                  name="phone"
+                  class="form-control border-start-0"
+                  value="<?php echo htmlspecialchars($user['phone']??''); ?>"
+                  placeholder="VD: 0901234567"
+                  pattern="0[0-9]{9,10}"
+                  maxlength="11"
+                  required
+                >
               </div>
             </div>
 
@@ -65,16 +94,31 @@
               </div>
             </div>
 
+            <!-- Xác nhận mật khẩu -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold text-dark">
+                <i class="fas fa-lock me-2 text-primary"></i>Xác nhận mật khẩu
+              </label>
+              <div class="input-group input-group-lg shadow-sm rounded-3">
+                <span class="input-group-text bg-white border-end-0">
+                  <i class="fas fa-lock text-secondary"></i>
+                </span>
+                <input type="password" name="password_confirmation" class="form-control border-start-0"
+                      placeholder="Nhập lại mật khẩu mới">
+              </div>
+            </div>
+
             <!-- Nút hành động -->
-            <div class="mt-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
-              <a href="<?php echo Helper::url('auth/account'); ?>" 
-                 class="btn btn-outline-secondary rounded-pill px-4 py-2 btn-action">
-                <i class="fas fa-arrow-left me-2"></i>Quay lại
-              </a>
-              <button type="submit" 
-                      class="btn btn-gradient-primary rounded-pill px-4 py-2 btn-action">
-                <i class="fas fa-save me-2"></i>Lưu thay đổi
-              </button>
+            <div class="bg-gradient-primary text-white rounded shadow-sm p-4 mt-4">
+              <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <a href="<?php echo Helper::url('auth/account'); ?>" 
+                  class="btn btn-outline-light rounded-pill px-4 py-2 btn-action">
+                  <i class="fas fa-arrow-left me-2"></i>Quay lại
+                </a>
+                <button type="submit" class="btn btn-light text-primary rounded-pill px-4 py-2 btn-action fw-bold btn-hover-glow">
+                  <i class="fas fa-save me-2"></i>Lưu thay đổi
+                </button>
+              </div>
             </div>
           </form>
         </div>
@@ -82,45 +126,31 @@
     </div>
   </div>
 </div>
-<style>
-/* Gradient màu chính */
-.bg-gradient-primary {
-  background: linear-gradient(135deg, #0d6efd, #6610f2);
-}
 
-/* Nút gradient chính */
-.btn-gradient-primary {
-  background: linear-gradient(135deg, #0d6efd, #6610f2);
-  color: #fff;
-  border: none;
-  transition: all 0.3s ease;
-}
-.btn-gradient-primary:hover {
-  filter: brightness(1.1);
-  transform: translateY(-2px);
-  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
-}
+<?php if (isset($_SESSION['error'])): ?>
+  <div class="position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+    <div id="flashToast" class="toast align-items-center text-white bg-danger border-0" 
+        role="alert" data-bs-autohide="true" data-bs-delay="3000">
+      <div class="d-flex">
+        <div class="toast-body">
+          <i class="fas fa-check-circle me-2"></i><?php echo $_SESSION['error']; ?>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+  <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
 
-/* Nút hành động chung */
-.btn-action {
-  transition: all 0.3s ease;
-}
-.btn-action:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
-}
-
-/* Input focus hiện đại */
-.input-group .form-control:focus {
-  border-color: #0d6efd;
-  box-shadow: 0 0 0 0.25rem rgba(13,110,253,0.25);
-}
-.input-group-text {
-  border-radius: 0.75rem 0 0 0.75rem;
-}
-.input-group .form-control {
-  border-radius: 0 0.75rem 0.75rem 0;
-}
-</style>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var toastEl = document.getElementById('flashToast');
+    if (toastEl) {
+      var toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+      toast.show(); // Hiển thị toast và tự ẩn sau delay
+    }
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <?php include 'views/client/layouts/footer.php'; ?>

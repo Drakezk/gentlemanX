@@ -115,7 +115,7 @@
                     <td class="fw-bold text-dark"><?php echo Helper::formatMoney($product['price']) ?></td>
                     <td>
                       <span class="badge bg-<?php echo $product['status']=='active'?'success':'secondary' ?>">
-                        <?php echo ucfirst($product['status']) ?>
+                        <?php echo ucfirst($product['status']=='active'?'Hoạt động':'Ẩn') ?>
                       </span>
                     </td>
                     <td><small class="text-muted"><?php echo Helper::formatDate($product['created_at'], 'd/m/Y') ?></small></td>
@@ -144,7 +144,7 @@
       </div>
       <div class="card-body">
         <?php if (!empty($latestUsers)): ?>
-          <div class="table-responsive">
+          <div class="table-responsive text-center">
             <table class="table table-hover align-middle mb-0">
               <thead class="table-light">
                 <tr>
@@ -161,7 +161,7 @@
                     <td><?php echo Helper::e($user['email']) ?></td>
                     <td>
                       <span class="badge bg-<?php echo $user['status']=='active'?'success':'secondary' ?>">
-                        <?php echo ucfirst($user['status']) ?>
+                        <?php echo ucfirst($user['status']=='active'?'Hoạt động':'Khóa') ?>
                       </span>
                     </td>
                     <td><small class="text-muted"><?php echo Helper::formatDate($user['created_at'], 'd/m/Y') ?></small></td>
@@ -177,5 +177,30 @@
     </div>
   </div>
 </div>
+
+<?php if (!empty($_SESSION['success'])): ?>
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+  <div id="flashToast" class="toast align-items-center text-bg-success border-0" 
+       role="alert" data-bs-autohide="true" data-bs-delay="3000">
+    <div class="d-flex">
+      <div class="toast-body">
+        <i class="fas fa-check-circle me-2"></i><?php echo $_SESSION['success']; ?>
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+<?php unset($_SESSION['success']); ?>
+<?php endif; ?>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var toastEl = document.getElementById('flashToast');
+    if (toastEl) {
+      var toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+      toast.show(); // Hiển thị toast và tự ẩn sau delay
+    }
+  });
+</script>
 
 <?php include 'views/admin/layouts/footer.php'; ?>

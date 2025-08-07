@@ -47,4 +47,61 @@ class Order extends Model {
         return $this->db->execute($sql, [$id, $userId]);
     }
 
+    // Tổng doanh thu
+    public function getTotalRevenue() {
+        $sql = "SELECT SUM(total_amount) AS revenue FROM {$this->table} WHERE status = 'confirmed'";
+        return $this->db->selectOne($sql)['revenue'] ?? 0;
+    }
+
+    // Tổng số đơn hàng (mọi trạng thái)
+    public function getTotalOrders() {
+        $sql = "SELECT COUNT(*) AS total FROM {$this->table}";
+        return $this->db->selectOne($sql)['total'] ?? 0;
+    }
+
+    // Tổng số đơn hàng thành công (confirmed)
+    public function getConfirmedOrders() {
+        $sql = "SELECT COUNT(*) AS total FROM {$this->table} WHERE status = 'confirmed'";
+        return $this->db->selectOne($sql)['total'] ?? 0;
+    }
+
+    // Doanh thu theo tháng
+    public function getRevenueByMonth() {
+        $sql = "SELECT DATE_FORMAT(created_at, '%Y-%m') AS label, SUM(total_amount) AS revenue
+                FROM {$this->table}
+                WHERE status = 'confirmed'
+                GROUP BY label
+                ORDER BY label DESC
+                LIMIT 12";
+        return $this->db->select($sql);
+    }
+
+    // Doanh thu theo tuần
+    public function getRevenueByWeek() {
+        $sql = "SELECT CONCAT(YEAR(created_at), '-W', LPAD(WEEK(created_at, 1), 2, '0')) AS label, SUM(total_amount) AS revenue
+                FROM {$this->table}
+                WHERE status = 'confirmed'
+                GROUP BY label
+                ORDER BY label DESC
+                LIMIT 9";
+        return $this->db->select($sql);
+    }
+
+    // Doanh thu theo năm
+    public function getRevenueByYear() {
+        $sql = "SELECT YEAR(created_at) AS label, SUM(total_amount) AS revenue
+                FROM {$this->table}
+                WHERE status = 'confirmed'
+                GROUP BY label
+                ORDER BY label DESC
+                LIMIT 6";
+        return $this->db->select($sql);
+    }
+
+    // Số lượng đơn theo trạng thái
+    public function getOrderCountByStatus() {
+        $sql = "SELECT status, COUNT(*) AS count FROM {$this->table} GROUP BY status";
+        return $this->db->select($sql);
+    }
+
 }

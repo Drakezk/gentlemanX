@@ -40,3 +40,31 @@ img.rounded-3.shadow-sm:hover {
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
+
+/* Hiệu ứng hover cho các nút hành động review */
+.btn-sm.rounded-pill:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+/* Tùy chỉnh màu sắc hover riêng nếu muốn */
+.btn-info:hover {
+  background-color: #0dcaf0;
+  color: #fff;
+}
+
+.btn-success:hover {
+  background-color: #198754;
+  color: #fff;
+}
+
+.btn-warning:hover {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
+}

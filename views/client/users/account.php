@@ -132,20 +132,26 @@
   <?php endif; ?>
 </div>
 
-<?php if (!empty($_SESSION['flash'])): ?>
-<div class="position-fixed top-0 end-0 p-3" style="z-index: 1055;">
-  <div id="flashToast" class="toast align-items-center text-bg-success border-0" 
-       role="alert" data-bs-autohide="true" data-bs-delay="3000">
-    <div class="d-flex">
-      <div class="toast-body">
-        <i class="fas fa-check-circle me-2"></i><?php echo $_SESSION['flash']; ?>
+<?php
+  $flashMessage = $_SESSION['success'] ?? $_SESSION['flash'] ?? null;
+
+  if (!empty($flashMessage)):
+  ?>
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+      <div id="flashToast" class="toast align-items-center text-bg-success border-0" 
+          role="alert" data-bs-autohide="true" data-bs-delay="3000">
+        <div class="d-flex">
+          <div class="toast-body">
+            <i class="fas fa-check-circle me-2"></i><?= $flashMessage ?>
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
       </div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
     </div>
-  </div>
-</div>
-<?php unset($_SESSION['flash']); ?>
-<?php endif; ?>
+  <?php
+  unset($_SESSION['success'], $_SESSION['flash']);
+  endif;
+?>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {

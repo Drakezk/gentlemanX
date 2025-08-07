@@ -52,10 +52,12 @@ class HomeController extends Controller {
         
         // Lấy category_id từ slug (nếu có slug)
         $categoryId = null;
+        $categoryName = 'Tất cả sản phẩm';
         if ($categorySlug) {
             $category = $this->categoryModel->getBySlug($categorySlug);
             if ($category) {
                 $categoryId = $category['id'];
+                $categoryName = $category['name'];
             }
         }
 
@@ -107,7 +109,8 @@ class HomeController extends Controller {
             'categories' => $categories,
             'selectedCategorySlug' => $categorySlug,
             'selectedSort' => $sort,
-            'selectedPriceRange' => $priceRange
+            'selectedPriceRange' => $priceRange,
+            'categoryName' => $categoryName
         ];
 
         $this->view('home/productList', $data, 'client');

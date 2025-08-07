@@ -56,4 +56,40 @@ class OrderController extends Controller {
         $this->orderModel->delete($id);
         Helper::redirect('admin/order/index');
     }
+
+    // Doanh thu thống kê
+    public function stats() {
+        $filter = $_GET['filter'] ?? 'month'; // Default: tháng
+
+        switch ($filter) {
+            case 'week':
+                $monthlyRevenue = $this->orderModel->getRevenueByWeek();
+                break;
+            case 'year':
+                $monthlyRevenue = $this->orderModel->getRevenueByYear();
+                break;
+            case 'month':
+            default:
+                $monthlyRevenue = $this->orderModel->getRevenueByMonth();
+                break;
+        }
+
+        $totalRevenue = $this->orderModel->getTotalRevenue();
+        $totalOrders = $this->orderModel->getTotalOrders();
+        $successfulOrders = $this->orderModel->getConfirmedOrders();
+        $orderByStatus = $this->orderModel->getOrderCountByStatus();
+
+        $data = [
+            'title' => 'Thống kê doanh thu',
+            'totalRevenue' => $totalRevenue,
+            'totalOrders' => $totalOrders,
+            'successfulOrders' => $successfulOrders,
+            'monthlyRevenue' => $monthlyRevenue,
+            'orderByStatus' => $orderByStatus,
+            'filter' => $filter
+        ];
+
+        $this->view('dashboard/stats', $data, 'admin');
+    }
+    
 }

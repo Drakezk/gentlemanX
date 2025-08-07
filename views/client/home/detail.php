@@ -1,5 +1,6 @@
 <?php include 'views/client/layouts/header.php'; ?>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <link rel="stylesheet" href="<?php echo Helper::asset('css/detail.css') ?>">
 
 <?php $isLoggedIn = !empty($_SESSION['user']); ?>
@@ -13,7 +14,7 @@
         <?php if (!empty($breadcrumb)): ?>
           <?php foreach ($breadcrumb as $item): ?>
             <li class="breadcrumb-item">
-              <a href="<?php echo Helper::url('product?category=' . $item['slug']); ?>">
+              <a href="<?php echo $categoryName; ?>">
                 <?php echo Helper::e($item['name']); ?>
               </a>
             </li>
@@ -81,10 +82,6 @@
           <?php endif; ?>
         </div>
 
-        <div class="mb-4 text-secondary" style="line-height:1.8;">
-          <?php echo nl2br(Helper::e($product['description'])); ?>
-        </div>
-
         <div class="mb-3">
           <span class="fw-semibold">Danh mục:</span>
           <a href="<?php echo Helper::url('product?category=' . $product['category_slug']); ?>" class="text-decoration-none text-primary fw-medium">
@@ -103,6 +100,27 @@
           <?php if (!empty($_SESSION['user'])): ?>
             <form method="POST" action="<?php echo Helper::url('cart/add'); ?>" class="m-0">
               <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+              <div class="mb-4">
+                <label for="quantity" class="form-label fw-semibold">Số lượng</label>
+                <div class="input-group" style="max-width: 160px;">
+                  <button type="button" class="btn btn-outline-secondary" onclick="decreaseQty()">
+                    <i class="bi bi-dash"></i>
+                  </button>
+                  <input
+                    type="number"
+                    id="quantity"
+                    name="quantity"
+                    value="1"
+                    min="1"
+                    class="form-control text-center fw-bold"
+                    style="min-width: 60px;"
+                    required
+                  >
+                  <button type="button" class="btn btn-outline-secondary" onclick="increaseQty()">
+                    <i class="bi bi-plus"></i>
+                  </button>
+                </div>
+              </div>
               <button class="btn btn-lg btn-gradient rounded-pill w-100">
                 <i class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng
               </button>
@@ -114,6 +132,23 @@
               <i class="fas fa-sign-in-alt me-2"></i> Đăng nhập để mua
             </a>
           <?php endif; ?>
+        </div>
+
+        <div class="pt-4 mt-5 border-top">
+          <div class="accordion" id="accordionDescription">
+            <div class="accordion-item border-0">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-semibold bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription" aria-expanded="false" aria-controls="collapseDescription">
+                  <i class="bi bi-info-circle me-2 text-primary"></i> Chi tiết sản phẩm
+                </button>
+              </h2>
+              <div id="collapseDescription" class="accordion-collapse collapse" data-bs-parent="#accordionDescription">
+                <div class="accordion-body text-secondary" style="line-height: 1.8;">
+                  <?php echo nl2br(Helper::e($product['description'])); ?>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -283,5 +318,18 @@ endforeach;
   window.loginUrl = '<?php echo Helper::url("auth/showLogin"); ?>';
 </script>
 <script src="<?php echo Helper::asset('js/detail.js'); ?>"></script>
+<script>
+  function increaseQty() {
+    let qty = document.getElementById('quantity');
+    qty.value = parseInt(qty.value) + 1;
+  }
+
+  function decreaseQty() {
+    let qty = document.getElementById('quantity');
+    if (parseInt(qty.value) > 1) {
+      qty.value = parseInt(qty.value) - 1;
+    }
+  }
+</script>
 
 <?php include 'views/client/layouts/footer.php'; ?>

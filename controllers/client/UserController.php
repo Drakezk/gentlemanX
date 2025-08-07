@@ -19,16 +19,23 @@ class UserController extends Controller {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name     = trim($_POST['name']);
+            $phone    = trim($_POST['phone']);
             $email    = trim($_POST['email']);
             $password = trim($_POST['password']);
+            $confirm  = trim($_POST['password_confirmation'] ?? '');
 
             $data = [
                 'name'  => $name,
                 'email' => $email,
+                'phone' => $phone,
             ];
 
-            // Nếu có đổi mật khẩu
+            // Nếu có nhập mật khẩu mới → phải xác nhận đúng
             if (!empty($password)) {
+                if ($password !== $confirm) {
+                    $_SESSION['error'] = 'Mật khẩu xác nhận không khớp.';
+                    Helper::redirect('user/edit');
+                }
                 $data['password'] = password_hash($password, PASSWORD_BCRYPT);
             }
 

@@ -4,7 +4,18 @@
 
 <section class="product-listing py-5">
   <div class="container">
-    <h1 class="text-center mb-4 fw-bold">Tất cả sản phẩm</h1>
+    <nav aria-label="breadcrumb" class="mb-3">
+      <ol class="breadcrumb justify-content-center bg-body-tertiary p-2 rounded-3 shadow-sm align-items-center">
+        <li class="breadcrumb-item">
+          <a href="<?php echo Helper::url(); ?>" class="text-decoration-none text-dark fw-medium">
+            <i class="bi bi-house-door-fill me-1"></i>Trang chủ
+          </a>
+        </li>
+        <li class="breadcrumb-item active fw-semibold text-primary" aria-current="page">
+          <?php echo $categoryName; ?>
+        </li>
+      </ol>
+    </nav>
 
     <!-- Bộ lọc & sắp xếp (tùy chọn) -->
     <div class="row mb-4">

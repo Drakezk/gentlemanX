@@ -35,11 +35,11 @@
             </li>
             <li>
               <i class="bi bi-envelope me-2 fs-5 text-white contact-icon"></i>
-              <a href="mailto:support@gentlemanx.com" class="text-white fw-semibold contact-link">support@gentlemanx.com</a>
+              <a href="#" class="text-white fw-semibold contact-link">support@gentlemanx.com</a>
             </li>
             <li>
               <i class="bi bi-telephone me-2 fs-5 text-white contact-icon"></i>
-              <a href="tel:0123456789" class="text-white fw-semibold contact-link">0123 456 789</a>
+              <a href="#" class="text-white fw-semibold contact-link">0123 456 789</a>
             </li>
             <li>
               <i class="bi bi-clock me-2 fs-5 text-white contact-icon"></i>

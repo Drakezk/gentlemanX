@@ -60,7 +60,11 @@ class AuthController extends Controller {
 
     $this->userModel->update($user['id'], ['last_login_at' => date('Y-m-d H:i:s')]);
     $_SESSION['success'] = 'Đăng nhập thành công!';
-    Helper::redirect('home/index');
+    if ($user['role'] === 'admin') {
+        Helper::redirect('admin/dashboard');
+    } else {
+        Helper::redirect('home/index');
+    }
 }
 
 

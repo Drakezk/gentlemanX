@@ -35,7 +35,7 @@
                         <li><a href="<?php echo Helper::url('admin/product/index') ?>">Danh sách sản phẩm</a></li>
                         <li><a href="<?php echo Helper::url('admin/product/create') ?>">Thêm sản phẩm</a></li>
                         <li><a href="<?php echo Helper::url('admin/category/index') ?>">Danh mục</a></li>
-                        <li><a href="<?php echo Helper::url('admin/brand') ?>">Thương hiệu</a></li>
+                        <!-- <li><a href="<?php echo Helper::url('admin/brand') ?>">Thương hiệu</a></li> -->
                     </ul>
                 </li>
                 
@@ -66,19 +66,19 @@
                 <!-- Content Management -->
                 <li>
                     <a href="#contentSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">
-                        <i class="fas fa-file-alt"></i> Quản lý nội dung
+                        <i class="fas fa-comment-dots"></i> Tương tác người dùng
                     </a>
                     <ul class="collapse list-unstyled" id="contentSubmenu">
-                        <li><a href="<?php echo Helper::url('admin/page') ?>">Trang tĩnh</a></li>
-                        <li><a href="<?php echo Helper::url('admin/banner') ?>">Banner</a></li>
+                        <li><a href="<?php echo Helper::url('admin/review/index') ?>">Bình luận</a></li>
+                        <li><a href="<?php echo Helper::url('admin/review/rejectedView') ?>">Đánh giá bị từ chối</a></li>
                         <li><a href="<?php echo Helper::url('admin/contact') ?>">Tin nhắn liên hệ</a></li>
                     </ul>
                 </li>
                 
                 <!-- Settings -->
                 <li>
-                    <a href="<?php echo Helper::url('admin/setting') ?>">
-                        <i class="fas fa-cog"></i> Cài đặt
+                    <a href="<?php echo Helper::url('admin/order/stats') ?>">
+                        <i class="fas fa-chart-line me-1"></i> Thống kê doanh thu
                     </a>
                 </li>
             </ul>
@@ -100,9 +100,9 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><h6 class="dropdown-header">Thông báo</h6></li>
-                                <li><a class="dropdown-item" href="#">Đơn hàng mới #1234</a></li>
-                                <li><a class="dropdown-item" href="#">Sản phẩm sắp hết hàng</a></li>
-                                <li><a class="dropdown-item" href="#">Tin nhắn liên hệ mới</a></li>
+                                <li><a class="dropdown-item" href="<?php echo Helper::url('admin/order/index') ?>">Đơn hàng mới</a></li>
+                                <li><a class="dropdown-item" href="<?php echo Helper::url('admin/order/stats') ?>">Tăng trưởng doanh thu</a></li>
+                                <li><a class="dropdown-item" href="<?php echo Helper::url('admin/contact') ?>">Tin nhắn liên hệ mới</a></li>
                             </ul>
                         </div>
                         

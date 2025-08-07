@@ -23,6 +23,7 @@ class UserController extends Controller {
             $data = [
                 'name'   => trim($_POST['name']),
                 'email'  => trim($_POST['email']),
+                'phone'  => trim($_POST['phone']),
                 'role'   => $_POST['role'],
                 'status' => $_POST['status']
             ];
@@ -51,6 +52,7 @@ class UserController extends Controller {
             $data = [
                 'name'   => trim($_POST['name']),
                 'email'  => trim($_POST['email']),
+                'phone'  => trim($_POST['phone']),
                 'role'   => $_POST['role'],
                 'status' => $_POST['status']
             ];

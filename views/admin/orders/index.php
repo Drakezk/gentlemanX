@@ -19,6 +19,7 @@
               <th>Trạng thái</th>
               <th>Thanh toán</th>
               <th>PT Thanh toán</th>
+              <th>SĐT giao hàng</th>
               <th>Địa chỉ</th>
               <th>Ngày tạo</th>
               <th>Cập nhật</th>
@@ -47,6 +48,7 @@
                   </span>
                 </td>
                 <td class="text-center"><?php echo $order['payment_method']; ?></td>
+                <td class="text-truncate" style="max-width:180px;"><?php echo !empty($order['shipping_phone']) ? $order['shipping_phone'] : '<i class="text-muted">Chưa có</i>'; ?></td>
                 <td class="text-truncate" style="max-width:180px;"><?php echo !empty($order['shipping_address']) ? $order['shipping_address'] : '<i class="text-muted">Chưa có</i>'; ?></td>
                 <td class="text-center small text-muted"><?php echo $order['created_at']; ?></td>
                 <td class="text-center small text-muted"><?php echo $order['updated_at']; ?></td>

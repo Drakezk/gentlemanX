@@ -25,7 +25,7 @@
               <!-- Ảnh sản phẩm -->
               <?php if (!empty($item['featured_image'])): ?>
                 <div class="ratio ratio-4x3 bg-light">
-                  <img src="<?php echo Helper::asset($item['featured_image']); ?>" 
+                  <img src="<?php echo Helper::upload($item['featured_image']); ?>" 
                        class="card-img-top object-fit-cover transition-scale"
                        alt="<?php echo htmlspecialchars($item['name']); ?>">
                 </div>

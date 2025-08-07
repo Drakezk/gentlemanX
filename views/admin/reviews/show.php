@@ -68,7 +68,6 @@
   </div>
 </div>
 
-<!-- Custom CSS cải thiện UI -->
 <style>
 .review-detail-page .card {
   border-radius: 1rem;
