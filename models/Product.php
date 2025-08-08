@@ -395,25 +395,35 @@ class Product extends Model {
         return $this->db->selectOne($sql, [$id]);
     }
 
-    // Tạo mới
-    public function create($data) {
-    // Lọc theo fillable
-    $filtered = array_intersect_key($data, array_flip($this->fillable));
-
-    // Xử lý gallery nếu là mảng
-    if (isset($filtered['gallery']) && is_array($filtered['gallery'])) {
-        $filtered['gallery'] = json_encode($filtered['gallery'], JSON_UNESCAPED_UNICODE);
+    /**
+     * Lấy sản phẩm theo SKU
+     * @param string $sku
+     * @return array|null
+     */
+    public function getBySku($sku) {
+        $sql = "SELECT * FROM {$this->table} WHERE sku = ? AND deleted_at IS NULL";
+        return $this->db->selectOne($sql, [$sku]);
     }
 
-    $fields = array_keys($filtered);
-    $placeholders = implode(',', array_fill(0, count($fields), '?'));
-    $columns = implode(',', $fields);
+    // Tạo mới
+    public function create($data) {
+        // Lọc theo fillable
+        $filtered = array_intersect_key($data, array_flip($this->fillable));
 
-    $values = array_values($filtered);
+        // Xử lý gallery nếu là mảng
+        if (isset($filtered['gallery']) && is_array($filtered['gallery'])) {
+            $filtered['gallery'] = json_encode($filtered['gallery'], JSON_UNESCAPED_UNICODE);
+        }
 
-    $sql = "INSERT INTO {$this->table} ({$columns}) VALUES ({$placeholders})";
-    return $this->db->insert($sql, $values);
-}
+        $fields = array_keys($filtered);
+        $placeholders = implode(',', array_fill(0, count($fields), '?'));
+        $columns = implode(',', $fields);
+
+        $values = array_values($filtered);
+
+        $sql = "INSERT INTO {$this->table} ({$columns}) VALUES ({$placeholders})";
+        return $this->db->insert($sql, $values);
+    }
 
     // Cập nhật
     public function update($id, $data) {

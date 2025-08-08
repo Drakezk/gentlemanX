@@ -108,41 +108,6 @@
   </div>
 </section>
 
-<!-- Categories Section -->
-<?php if (!empty($categories)): ?>
-<section class="categories-section py-5 fade-up">
-    <div class="container">
-        <h2 class="text-center mb-2 fw-bold">Danh mục sản phẩm</h2>
-        <p class="text-center text-muted mb-4">Khám phá phong cách quý ông từ những sản phẩm chủ đạo</p>
-        <div class="row">
-            <?php foreach ($categories as $category): ?>
-                <div class="col-md-3 mb-4">
-                    <div class="card category-card h-100 text-center">
-                        <div class="card-body">
-                            <?php if ($category['image']): ?>
-                                <img src="<?php echo Helper::upload($category['image']) ?>" 
-                                     alt="<?php echo Helper::e($category['name']) ?>" 
-                                     class="img-fluid mb-3" style="height: 80px; object-fit: contain;">
-                            <?php else: ?>
-                                <i class="fas fa-folder fa-3x text-primary mb-3"></i>
-                            <?php endif; ?>
-                            <h5 class="card-title"><?php echo Helper::e($category['name']) ?></h5>
-                            <p class="card-text text-muted">
-                                <?php echo Helper::truncate($category['description'], 80) ?>
-                            </p>
-                            <a href="<?php echo Helper::url('category/' . $category['slug']) ?>" 
-                               class="btn btn-outline-primary">
-                                Xem sản phẩm
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</section>
-<?php endif; ?>
-
 <!-- Featured Products -->
 <?php if (!empty($featuredProducts)): ?>
 <section class="featured-products py-5 bg-light fade-up">

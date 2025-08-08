@@ -30,7 +30,7 @@ class Category extends Model {
      * @return array
      */
     public function getParentCategories() {
-        return $this->getAll(['parent_id' => null, 'status' => 'active'], 'sort_order ASC, name ASC');
+        return $this->getCategory(['parent_id' => null, 'status' => 'active'], 'sort_order ASC, name ASC');
     }
     
     /**

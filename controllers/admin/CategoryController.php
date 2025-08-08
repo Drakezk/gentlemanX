@@ -8,8 +8,19 @@ class CategoryController extends Controller {
     }
 
     public function index() {
-        $categories = $this->categoryModel->getAll();
-        $this->view('categories/index', ['categories' => $categories], 'admin');
+        // Lấy tất cả danh mục
+        $categories = $this->categoryModel->getAll([], 'sort_order ASC');
+
+        // Chuẩn bị danh sách tên danh mục cha để hiển thị
+        $parentNames = [];
+        foreach ($categories as $cat) {
+            $parentNames[$cat['id']] = $cat['name'];
+        }
+
+        $this->view('categories/index', [
+            'categories' => $categories,
+            'parentNames' => $parentNames
+        ], 'admin');
     }
 
     public function create() {
@@ -27,7 +38,9 @@ class CategoryController extends Controller {
             $this->categoryModel->create($data);
             Helper::redirect('admin/category/index');
         }
-        $this->view('categories/create', [], 'admin');
+        // Lấy danh mục cha cho dropdown (chỉ hiển thị danh mục không có cha)
+        $parentCategories = $this->categoryModel->getParentCategories();
+        $this->view('categories/create', ['parentCategories' => $parentCategories], 'admin');
     }
 
     public function edit($id) {
@@ -48,7 +61,15 @@ class CategoryController extends Controller {
             $this->categoryModel->update($id, $data);
             Helper::redirect('admin/category/index');
         }
-        $this->view('categories/edit', ['category' => $category], 'admin');
+        // Lấy danh mục cha để chọn (trừ chính nó ra để tránh lặp đệ quy)
+        $parentCategories = array_filter(
+            $this->categoryModel->getParentCategories(),
+            fn($cat) => $cat['id'] != $id
+        );
+        $this->view('categories/edit', [
+            'category' => $category,
+            'parentCategories' => $parentCategories
+        ], 'admin');
     }
 
     public function delete($id) {

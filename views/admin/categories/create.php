@@ -18,6 +18,22 @@
     <!-- Body -->
     <div class="card-body">
       <form method="POST" action="" class="needs-validation" novalidate>
+        <?php
+          // Lấy danh sách danh mục cha từ model
+          $categoryModel = new Category(); 
+          $parentCategories = $categoryModel->getParentCategories();
+        ?>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Danh mục cha</label>
+          <select name="parent_id" class="form-select rounded-3">
+            <option value="">-- Không có (danh mục cha) --</option>
+            <?php foreach ($parentCategories as $parent): ?>
+              <option value="<?= $parent['id'] ?>">
+                <?= $parent['name'] ?>
+              </option>
+            <?php endforeach; ?>
+          </select>
+        </div>
         <div class="mb-3">
           <label class="form-label fw-semibold">Tên danh mục <span class="text-danger">*</span></label>
           <input type="text" name="name" class="form-control rounded-3" required>

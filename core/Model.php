@@ -56,6 +56,41 @@ class Model {
         
         return $this->db->select($sql, $params);
     }
+
+    public function getCategory($conditions = [], $orderBy = '', $limit = 0, $offset = 0) {
+        // Câu truy vấn SELECT cơ bản với điều kiện deleted_at IS NULL
+        $sql = "SELECT * FROM {$this->table} WHERE deleted_at IS NULL";
+        $params = [];
+
+        // Thêm điều kiện WHERE từ $conditions
+        if (!empty($conditions)) {
+            foreach ($conditions as $field => $value) {
+                if ($value === null) {
+                    $sql .= " AND {$field} IS NULL";
+                } else {
+                    $sql .= " AND {$field} = ?";
+                    $params[] = $value;
+                }
+            }
+        }
+
+        // Thêm ORDER BY nếu có
+        if (!empty($orderBy)) {
+            $sql .= " ORDER BY {$orderBy}";
+        }
+
+        // Thêm LIMIT và OFFSET nếu có
+        if ($limit > 0) {
+            $sql .= " LIMIT {$limit}";
+            if ($offset > 0) {
+                $sql .= " OFFSET {$offset}";
+            }
+        }
+
+        // Thực thi truy vấn và trả về kết quả
+        return $this->db->select($sql, $params);
+    }
+
     
     /**
      * Lấy record theo ID

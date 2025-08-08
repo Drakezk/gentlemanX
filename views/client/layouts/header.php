@@ -24,6 +24,7 @@ $cartCount = $cartItemModel->countItems($userId, $sessionId);
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo Helper::asset('css/client.css') ?>">
     <link rel="stylesheet" href="<?php echo Helper::asset('css/header.css') ?>">
+    <link rel="stylesheet" href="<?php echo Helper::asset('css/nav.css') ?>">
 </head>
 <body>
     <!-- Header -->
@@ -85,38 +86,50 @@ $cartCount = $cartItemModel->countItems($userId, $sessionId);
         </div>
     </div>
 
+    <?php
+        require_once __DIR__ . '/../../../models/Category.php';
+        $categoryModel = new Category();
+        $navCategories = $categoryModel->getCategoryTree(); // chỉ lấy danh mục cha
+    ?>
+
     <!-- Navigation -->
     <nav class="nav bg-light border-top">
         <div class="container">
             <ul class="nav justify-content-center fw-semibold flex-wrap">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="<?php echo Helper::url(); ?>">Trang chủ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="<?php echo Helper::url('home/productList?category=ao-nam'); ?>">
-                        Áo
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="<?php echo Helper::url('home/productList?category=quan-nam'); ?>">
-                        Quần
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="<?php echo Helper::url('home/productList?category=giay-dep-nam'); ?>">
-                        Giày
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="<?php echo Helper::url('home/productList?category=phu-kien-nam'); ?>">
-                        Phụ kiện
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-danger" href="<?php echo Helper::url('home/productList?sort='); ?>">
-                        Sale
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="<?php echo Helper::url(); ?>">Trang chủ</a>
+            </li>
+
+            <?php foreach ($navCategories as $cat): ?>
+                <?php if (!empty($cat['children'])): ?>
+                    <!-- Có danh mục con -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-dark" href="<?php echo Helper::url('home/productList?category=' . $cat['slug']); ?>" id="navDropdown<?= $cat['id'] ?>" role="button">
+                            <?php echo htmlspecialchars($cat['name']); ?>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navDropdown<?= $cat['id'] ?>">
+                            <?php foreach ($cat['children'] as $child): ?>
+                                <li>
+                                    <a class="dropdown-item" href="<?php echo Helper::url('home/productList?category=' . $child['slug']); ?>">
+                                        <?php echo htmlspecialchars($child['name']); ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </li>
+                <?php else: ?>
+                    <!-- Không có danh mục con -->
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="<?php echo Helper::url('home/productList?category=' . $cat['slug']); ?>">
+                            <?php echo htmlspecialchars($cat['name']); ?>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+
+            <li class="nav-item">
+                <a class="nav-link text-danger" href="<?php echo Helper::url('home/productList?sort=sale'); ?>">Sale</a>
+            </li>
             </ul>
         </div>
     </nav>

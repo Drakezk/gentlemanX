@@ -17,6 +17,14 @@ class ProductController extends Controller {
     public function create() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            // Kiểm tra trùng SKU
+            $existingProduct = $this->productModel->getBySku($_POST['sku']);
+            if ($existingProduct) {
+                $_SESSION['error'] = 'SKU đã tồn tại. Vui lòng chọn mã SKU khác.';
+                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                exit;
+            }
+
             // Tạo thư mục con nếu chưa có
             $subFolder = 'products/'; // thư mục con trong assets/uploads/
             if (!is_dir(UPLOAD_PATH . $subFolder)) {
@@ -67,6 +75,7 @@ class ProductController extends Controller {
                 'status' => $_POST['status'],
                 'is_featured' => isset($_POST['is_featured']) ? 1 : 0
             ];
+            
             $this->productModel->create($data);
             Helper::redirect('admin/product/index');
         }

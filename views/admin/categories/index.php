@@ -23,6 +23,7 @@
             <tr class="text-center">
               <th>ID</th>
               <th>Tên</th>
+              <th>Danh mục cha</th>
               <th>Slug</th>
               <th>Mô tả</th>
               <th>Thứ tự</th>
@@ -35,6 +36,13 @@
               <tr>
                 <td class="text-center fw-semibold"><?= $c['id'] ?></td>
                 <td class="fw-bold text-primary"><?= Helper::e($c['name']) ?></td>
+                <td class="text-muted text-center">
+                  <?php if ($c['parent_id']): ?>
+                    <?php echo isset($parentNames[$c['parent_id']]) ? Helper::e($parentNames[$c['parent_id']]) : '---'; ?>
+                  <?php else: ?>
+                    <span class="text-secondary">-- (Cha) --</span>
+                  <?php endif; ?>
+                </td>
                 <td class="text-muted"><?= Helper::e($c['slug']) ?></td>
                 <td class="text-wrap"><?= Helper::e($c['description']) ?></td>
                 <td class="text-center"><?= $c['sort_order'] ?></td>

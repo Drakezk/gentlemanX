@@ -18,6 +18,26 @@
     <!-- Body -->
     <div class="card-body">
       <form method="POST" action="">
+        <?php
+          // Lấy danh sách danh mục cha từ model
+          $categoryModel = new Category(); 
+          $parentCategories = $categoryModel->getParentCategories();
+        ?>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Danh mục cha</label>
+          <select name="parent_id" class="form-select rounded-3">
+            <option value="">-- Không có (danh mục cha) --</option>
+            <?php foreach ($parentCategories as $parent): ?>
+              <?php if ($parent['id'] != $category['id']): // Không cho chọn chính nó làm cha ?>
+                <option value="<?= $parent['id'] ?>" 
+                        <?= $category['parent_id'] == $parent['id'] ? 'selected' : '' ?>>
+                  <?= $parent['name'] ?>
+                </option>
+              <?php endif; ?>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        
         <div class="mb-3">
           <label class="form-label fw-semibold">Tên danh mục <span class="text-danger">*</span></label>
           <input type="text" name="name" class="form-control rounded-3"
