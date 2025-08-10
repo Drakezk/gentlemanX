@@ -8,15 +8,24 @@ class UserController extends Controller {
 
     // Trang danh sách Khách hàng
     public function customers() {
-        $users = $this->userModel->getAll(['role' => 'customer']);
+        $keyword = $_GET['q'] ?? '';
+        $status  = $_GET['status'] ?? '';
+
+        if (!empty($keyword) || !empty($status)) {
+            $users = $this->userModel->searchCustomers($keyword, $status);
+        } else {
+            $users = $this->userModel->getAll(['role' => 'customer']);
+        }
+
         $data = [
-            'title' => 'Danh sách Khách hàng',
-            'users' => $users
+            'title'   => 'Danh sách Khách hàng',
+            'users'   => $users,
+            'keyword' => $keyword,
+            'status'  => $status
         ];
         $this->view('users/customers', $data, 'admin');
     }
 
-    // Thêm người dùng
     public function create() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Lọc dữ liệu cần thiết
@@ -40,7 +49,6 @@ class UserController extends Controller {
         $this->view('users/create', ['title' => 'Thêm người dùng'], 'admin');
     }
 
-    // Sửa người dùng
     public function edit($id) {
         // Lấy user hiện tại
         $user = $this->userModel->getUser($id);
@@ -72,7 +80,6 @@ class UserController extends Controller {
         ], 'admin');
     }
 
-    // Xóa người dùng
     public function delete($id) {
         $this->userModel->deleteUser($id);
         Helper::redirect('admin/user/customers');

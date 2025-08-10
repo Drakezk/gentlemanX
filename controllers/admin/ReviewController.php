@@ -11,10 +11,18 @@ class ReviewController extends Controller {
         $this->userModel = $this->model('User');
     }
 
-    // Danh sách tất cả đánh giá
     public function index() {
-        $reviews = $this->reviewModel->getAllWithDetails(); // JOIN product, user
-        $this->view('reviews/index', ['reviews' => $reviews], 'admin');
+        $keyword = isset($_GET['q']) ? trim($_GET['q']) : '';
+        if ($keyword !== '') {
+            $reviews = $this->reviewModel->searchReviews($keyword);
+        } else {
+            $reviews = $this->reviewModel->getAllWithDetails();
+        }
+        
+        $this->view('reviews/index', [
+            'reviews' => $reviews,
+            'keyword' => $keyword
+        ], 'admin');
     }
 
     // Chi tiết 1 đánh giá
@@ -41,13 +49,20 @@ class ReviewController extends Controller {
         Helper::redirect('admin/review');
     }
 
-    public function rejectedView()
-    {
-        $reviews = $this->reviewModel->getRejected();
-        $this->view('reviews/rejected', ['reviews' => $reviews], 'admin');
+    public function rejectedView(){
+        $keyword = isset($_GET['q']) ? trim($_GET['q']) : '';
+        if ($keyword !== '') {
+            $reviews = $this->reviewModel->searchReviews($keyword, 'rejected');
+        } else {
+            $reviews = $this->reviewModel->getRejected();
+        }
+
+        $this->view('reviews/rejected', [
+            'reviews' => $reviews,
+            'keyword' => $keyword
+        ], 'admin');
     }
 
-    // Xoá đánh giá
     public function delete($id) {
         $this->reviewModel->delete($id);
         $_SESSION['success'] = 'Đã xóa đánh giá';

@@ -1,5 +1,4 @@
 <?php
-// models/Wishlist.php
 class Wishlist extends Model {
     protected $table = 'wishlists';
     protected $primaryKey = 'id';
@@ -16,7 +15,6 @@ class Wishlist extends Model {
         return $this->db->select($sql, [$userId]);
     }
 
-    // Thêm sản phẩm vào wishlist
     public function add($userId, $productId) {
         // Kiểm tra trùng
         $check = $this->db->selectOne(
@@ -32,7 +30,6 @@ class Wishlist extends Model {
         );
     }
 
-    // Xóa sản phẩm khỏi wishlist
     public function remove($userId, $productId) {
         return $this->db->execute(
             "DELETE FROM {$this->table} WHERE user_id = ? AND product_id = ?",

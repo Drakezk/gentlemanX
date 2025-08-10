@@ -7,13 +7,25 @@ class ProductController extends Controller {
         $this->productModel = $this->model('Product');
     }
 
-    // Danh sách sản phẩm
     public function index() {
-        $products = $this->productModel->getAll(); // bạn viết hàm getAll trong model
-        $this->view('product/index', ['products' => $products], 'admin');
+        $productModel = new Product();
+
+        $keyword = isset($_GET['q']) ? trim($_GET['q']) : '';
+        $status  = isset($_GET['status']) ? trim($_GET['status']) : '';
+
+        if ($keyword !== '' || $status !== '') {
+            $products = $productModel->searchProducts($keyword, $status);
+        } else {
+            $products = $productModel->getAll();
+        }
+
+        $this->view('product/index', [
+            'products' => $products,
+            'keyword'  => $keyword,
+            'status'   => $status
+        ], 'admin');
     }
 
-    // Thêm mới
     public function create() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -82,7 +94,6 @@ class ProductController extends Controller {
         $this->view('product/create', [], 'admin');
     }
 
-    // Sửa
     public function edit($id) {
         // Lấy sản phẩm hiện tại
         $product = $this->productModel->getById($id);
@@ -165,7 +176,6 @@ class ProductController extends Controller {
         $this->view('product/edit', ['product' => $product], 'admin');
     }
 
-    // Xóa
     public function delete($id) {
         $this->productModel->deleteProduct($id);
         Helper::redirect('admin/product/index');

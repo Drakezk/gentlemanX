@@ -1,9 +1,4 @@
 <?php
-/**
- * Category Model - Model cho bảng categories
- * Xử lý các thao tác liên quan đến danh mục sản phẩm
- */
-
 class Category extends Model {
     protected $table = 'categories';
     protected $fillable = [
@@ -13,8 +8,6 @@ class Category extends Model {
     
     /**
      * Lấy category theo slug
-     * @param string $slug
-     * @return array|null
      */
     public function getBySlug($slug) {
         $sql = "SELECT c.*, parent.name as parent_name
@@ -27,7 +20,6 @@ class Category extends Model {
     
     /**
      * Lấy danh mục cha
-     * @return array
      */
     public function getParentCategories() {
         return $this->getCategory(['parent_id' => null, 'status' => 'active'], 'sort_order ASC, name ASC');
@@ -35,8 +27,6 @@ class Category extends Model {
     
     /**
      * Lấy danh mục con
-     * @param int $parentId
-     * @return array
      */
     public function getChildCategories($parentId) {
         return $this->getAll(['parent_id' => $parentId, 'status' => 'active'], 'sort_order ASC, name ASC');
@@ -44,7 +34,6 @@ class Category extends Model {
     
     /**
      * Lấy cây danh mục
-     * @return array
      */
     public function getCategoryTree() {
         $parents = $this->getParentCategories();
@@ -60,8 +49,6 @@ class Category extends Model {
     
     /**
      * Lấy breadcrumb của category
-     * @param int $categoryId
-     * @return array
      */
     public function getBreadcrumb($categoryId) {
         $breadcrumb = [];
@@ -82,9 +69,6 @@ class Category extends Model {
     
     /**
      * Kiểm tra slug đã tồn tại chưa
-     * @param string $slug
-     * @param int $excludeId
-     * @return bool
      */
     public function slugExists($slug, $excludeId = null) {
         $sql = "SELECT COUNT(*) as total FROM {$this->table} WHERE slug = ? AND deleted_at IS NULL";
@@ -101,8 +85,6 @@ class Category extends Model {
     
     /**
      * Lấy số lượng sản phẩm trong danh mục
-     * @param int $categoryId
-     * @return int
      */
     public function getProductCount($categoryId) {
         $sql = "SELECT COUNT(*) as total FROM products 
@@ -137,5 +119,23 @@ class Category extends Model {
         $sql = "DELETE FROM {$this->table} WHERE id=?";
         return $this->db->execute($sql, [$id]);
     }
+
+    public function searchCategory($keyword, $status = null) {
+        $sql = "SELECT * FROM {$this->table}
+                WHERE (name LIKE ? OR slug LIKE ?)";
+        
+        $kw = "%{$keyword}%";
+        $params = [$kw, $kw];
+
+        if (!empty($status)) {
+            $sql .= " AND status = ?";
+            $params[] = $status;
+        }
+
+        $sql .= " ORDER BY sort_order ASC";
+
+        return $this->db->select($sql, $params);
+    }
+
 }
 ?>

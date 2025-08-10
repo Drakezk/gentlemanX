@@ -8,18 +8,26 @@ class CategoryController extends Controller {
     }
 
     public function index() {
-        // Lấy tất cả danh mục
-        $categories = $this->categoryModel->getAll([], 'sort_order ASC');
+        $keyword = isset($_GET['q']) ? trim($_GET['q']) : '';
+        $status  = isset($_GET['status']) ? trim($_GET['status']) : '';
 
-        // Chuẩn bị danh sách tên danh mục cha để hiển thị
+        if ($keyword !== '' || $status !== '') {
+            $categories = $this->categoryModel->searchCategory($keyword, $status);
+        } else {
+            $categories = $this->categoryModel->getAll([], 'sort_order ASC');
+        }
+
+        // Chuẩn bị danh sách tên danh mục cha
         $parentNames = [];
         foreach ($categories as $cat) {
             $parentNames[$cat['id']] = $cat['name'];
         }
 
         $this->view('categories/index', [
-            'categories' => $categories,
-            'parentNames' => $parentNames
+            'categories'  => $categories,
+            'parentNames' => $parentNames,
+            'keyword'     => $keyword,
+            'status'      => $status
         ], 'admin');
     }
 

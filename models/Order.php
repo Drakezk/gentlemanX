@@ -1,5 +1,4 @@
 <?php
-// models/Order.php
 class Order extends Model {
     protected $table = 'orders';          // Tên bảng
     protected $primaryKey = 'id';         // Khóa chính
@@ -12,7 +11,7 @@ class Order extends Model {
         return $this->getAll(['user_id' => $userId], 'created_at DESC');
     }
 
-    // Nếu cần lấy chi tiết theo id và user
+    // Lấy chi tiết theo id và user
     public function getByIdAndUser($id, $userId) {
         $sql = "SELECT o.*, u.name AS user_name, u.phone AS user_phone
                 FROM {$this->table} o
@@ -102,6 +101,25 @@ class Order extends Model {
     public function getOrderCountByStatus() {
         $sql = "SELECT status, COUNT(*) AS count FROM {$this->table} GROUP BY status";
         return $this->db->select($sql);
+    }
+
+    public function searchOrders($keyword, $status = null) {
+        $sql = "SELECT o.*, u.name AS customer_name
+                FROM {$this->table} o
+                LEFT JOIN users u ON o.user_id = u.id
+                WHERE (o.order_number LIKE ? OR u.name LIKE ? OR o.shipping_address LIKE ?)";
+        
+        $kw = "%{$keyword}%";
+        $params = [$kw, $kw, $kw];
+
+        if (!empty($status)) {
+            $sql .= " AND o.status = ?";
+            $params[] = $status;
+        }
+
+        $sql .= " ORDER BY o.created_at DESC";
+
+        return $this->db->select($sql, $params);
     }
 
 }

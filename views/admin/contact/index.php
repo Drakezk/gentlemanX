@@ -1,11 +1,24 @@
 <?php include_once 'views/admin/layouts/header.php'; ?>
 
 <link rel="stylesheet" href="<?php echo Helper::asset('css/management.css') ?>">
+<link rel="stylesheet" href="<?php echo Helper::asset('css/search.css') ?>">
 
 <div class="container py-4">
   <div class="card shadow-sm border-0 rounded-4">
     <div class="card-header bg-gradient-primary d-flex justify-content-between align-items-center rounded-top-4">
       <h3 class="mb-0 fw-bold text-white"><i class="fas fa-envelope me-2"></i>Quản lý liên hệ</h3>
+      <form method="GET" class="d-flex">
+        <input type="text" name="q" value="<?= htmlspecialchars($keyword ?? '') ?>" 
+              class="form-control form-control-sm me-2 rounded-pill" placeholder="Tìm theo tên, email hoặc tiêu đề...">
+        <select name="status" class="form-select form-select-sm me-2 rounded-pill">
+            <option value="">Tất cả trạng thái</option>
+            <option value="pending" <?= ($status ?? '') === 'pending' ? 'selected' : '' ?>>Chưa phản hồi</option>
+            <option value="replied" <?= ($status ?? '') === 'replied' ? 'selected' : '' ?>>Đã phản hồi</option>
+        </select>
+        <button type="submit" class="btn btn-light btn-sm fw-semibold rounded-pill shadow-sm">
+            <i class="fas fa-search"></i>
+        </button>
+      </form>
     </div>
 
     <div class="card-body p-0">

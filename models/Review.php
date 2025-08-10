@@ -165,4 +165,24 @@ class Review extends Model
         return $this->db->select($sql);
     }
 
+    public function searchReviews($keyword, $status = null) {
+        $sql = "SELECT r.*, p.name AS product_name, u.name AS user_name
+                FROM {$this->table} r
+                LEFT JOIN products p ON r.product_id = p.id
+                LEFT JOIN users u ON r.user_id = u.id
+                WHERE (p.name LIKE ? OR u.name LIKE ?)";
+
+        $params = ["%{$keyword}%", "%{$keyword}%"];
+
+        // Nếu có truyền status thì thêm điều kiện lọc
+        if (!empty($status)) {
+            $sql .= " AND r.status = ?";
+            $params[] = $status;
+        }
+
+        $sql .= " ORDER BY r.created_at DESC";
+
+        return $this->db->select($sql, $params);
+    }
+
 }

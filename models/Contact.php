@@ -38,4 +38,24 @@ class Contact extends Model {
         ];
         return $this->update($id, $data);
     }
+
+    public function searchMessages($keyword, $status = null) {
+    $sql = "SELECT c.*, u.name AS user_name
+            FROM {$this->table} c
+            LEFT JOIN users u ON c.user_id = u.id
+            WHERE (c.name LIKE ? OR c.email LIKE ? OR c.subject LIKE ? OR u.name LIKE ?)";
+    
+    $kw = "%{$keyword}%";
+    $params = [$kw, $kw, $kw, $kw];
+
+    if (!empty($status)) {
+        $sql .= " AND c.status = ?";
+        $params[] = $status;
+    }
+
+    $sql .= " ORDER BY c.created_at DESC";
+
+    return $this->db->select($sql, $params);
+}
+
 }

@@ -7,17 +7,25 @@ class OrderController extends Controller {
         $this->orderModel = $this->model('Order');
     }
 
-    // Danh sách đơn hàng
     public function index() {
-        $orders = $this->orderModel->getAll([], 'created_at DESC');
+        $keyword = $_GET['q'] ?? '';
+        $status = $_GET['status'] ?? null;
+
+        if (!empty($keyword) || !empty($status)) {
+            $orders = $this->orderModel->searchOrders($keyword, $status);
+        } else {
+            $orders = $this->orderModel->getAll([], 'created_at DESC');
+        }
+
         $data = [
             'title' => 'Quản lý đơn hàng',
-            'orders' => $orders
+            'orders' => $orders,
+            'keyword' => $keyword,
+            'status' => $status
         ];
         $this->view('orders/index', $data, 'admin');
     }
 
-    // Sửa đơn hàng
     public function edit($id) {
         $order = $this->orderModel->getById($id);
         if (!$order) {
@@ -27,7 +35,7 @@ class OrderController extends Controller {
 
         // Chặn chỉnh sửa nếu đã xác nhận hoặc đã hủy
         if (in_array($order['status'], ['confirmed','cancelled'])) {
-            // Bạn có thể redirect hoặc báo lỗi
+            // Có thể redirect hoặc báo lỗi
             $_SESSION['error'] = 'Đơn hàng đã xác nhận hoặc đã hủy, không thể chỉnh sửa!';
             Helper::redirect('admin/order/index');
         }
@@ -51,7 +59,6 @@ class OrderController extends Controller {
         $this->view('orders/edit', $data, 'admin');
     }
 
-    // Xóa đơn hàng
     public function delete($id) {
         $this->orderModel->delete($id);
         Helper::redirect('admin/order/index');

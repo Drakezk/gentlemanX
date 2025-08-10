@@ -64,7 +64,6 @@ class ProfileController extends Controller
             Helper::redirect('admin/profile/index');
         }
 
-        // GET → hiển thị form
         $this->view('dashboard/profileUpdate', [
             'admin' => $admin
         ], 'admin');

@@ -1,0 +1,19 @@
+form.d-flex button.btn {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  color: #495057; /* màu text mặc định */
+  background-color: #f8f9fa; /* màu nền btn-light */
+  border: 1.5px solid transparent;
+}
+
+form.d-flex button.btn:hover {
+  color: #fff;
+  background-color: #0d6efd; /* xanh primary */
+  border-color: #0d6efd;
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.5);
+}
+
+/* Icon trong button cũng đổi màu khi hover */
+form.d-flex button.btn:hover i {
+  color: #fff;
+  transition: color 0.3s ease;
+}

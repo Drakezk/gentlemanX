@@ -1,11 +1,19 @@
 <?php include_once 'views/admin/layouts/header.php'; ?>
 
 <link rel="stylesheet" href="<?php echo Helper::asset('css/management.css') ?>">
+<link rel="stylesheet" href="<?php echo Helper::asset('css/search.css') ?>">
 
 <div class="review-management container py-4">
   <div class="card shadow-sm border-0 rounded-4">
     <div class="card-header bg-gradient-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
       <h3 class="mb-0 fw-bold"><i class="fas fa-star me-2"></i>Quản lý đánh giá</h3>
+      <form method="GET" class="d-flex">
+        <input type="text" name="q" value="<?php echo isset($keyword) ? Helper::e($keyword) : ''; ?>" 
+               class="form-control form-control-sm me-2 rounded-pill" placeholder="Tìm theo sản phẩm hoặc người dùng...">
+        <button type="submit" class="btn btn-light btn-sm fw-semibold rounded-pill shadow-sm">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
     </div>
 
     <div class="card-body p-0">
@@ -87,7 +95,7 @@
   transition: all 0.3s ease;
 }
 
-/* Tùy chỉnh màu sắc hover riêng nếu muốn */
+/* Tùy chỉnh màu sắc hover riêng */
 .btn-info:hover {
   background-color: #0dcaf0;
   color: #fff;

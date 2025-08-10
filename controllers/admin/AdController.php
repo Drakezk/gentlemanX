@@ -7,20 +7,28 @@ class AdController extends Controller {
         $this->userModel = $this->model('User');
     }
 
-    // Trang danh sách Admin
     public function admins() {
-        $users = $this->userModel->getAll(['role' => 'admin']);
+        $keyword = $_GET['q'] ?? '';
+        $status  = $_GET['status'] ?? '';
+
+        if (!empty($keyword) || !empty($status)) {
+            $users = $this->userModel->searchAdmins($keyword, $status);
+        } else {
+            $users = $this->userModel->getAll(['role' => 'admin']);
+        }
         // Lấy người dùng hiện tại
         $currentUser = $this->auth->user();
+
         $data = [
             'title' => 'Danh sách Quản trị viên',
             'users' => $users,
-            'currentUser' => $currentUser
+            'currentUser' => $currentUser,
+            'keyword' => $keyword,
+            'status'  => $status
         ];
         $this->view('users/admins', $data, 'admin');
     }
 
-    // Thêm người dùng
     public function create() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Lọc dữ liệu cần thiết
@@ -43,7 +51,6 @@ class AdController extends Controller {
         $this->view('users/create', ['title' => 'Thêm người dùng'], 'admin');
     }
 
-    // Sửa người dùng
     public function edit($id) {
         // Lấy user hiện tại
         $user = $this->userModel->getUser($id);
@@ -74,7 +81,6 @@ class AdController extends Controller {
         ], 'admin');
     }
 
-    // Xóa người dùng
     public function delete($id) {
         $this->userModel->deleteUser($id);
         Helper::redirect('admin/ad/admins');

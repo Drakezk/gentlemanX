@@ -1,6 +1,7 @@
 <?php include 'views/admin/layouts/header.php'; ?>
 
 <link rel="stylesheet" href="<?php echo Helper::asset('css/create.css'); ?>">
+<link rel="stylesheet" href="<?php echo Helper::asset('css/search.css') ?>">
 
 <div class="container py-4">
   <div class="card shadow-sm border-0 rounded-4">
@@ -9,6 +10,20 @@
       <h3 class="mb-0 fw-bold">
         <i class="fas fa-users me-2"></i> Danh sách Khách hàng
       </h3>
+      <form method="GET" class="d-flex">
+        <input type="text" name="q" value="<?= htmlspecialchars($keyword ?? '') ?>"
+              class="form-control form-control-sm me-2 rounded-pill" placeholder="Tìm theo tên, email hoặc SĐT...">
+
+        <select name="status" class="form-select form-select-sm me-2 rounded-pill">
+            <option value="">Tất cả trạng thái</option>
+            <option value="active" <?= ($status ?? '') === 'active' ? 'selected' : '' ?>>Hoạt động</option>
+            <option value="inactive" <?= ($status ?? '') === 'inactive' ? 'selected' : '' ?>>Ngừng hoạt động</option>
+        </select>
+
+        <button type="submit" class="btn btn-light btn-sm fw-semibold rounded-pill shadow-sm">
+            <i class="fas fa-search"></i>
+        </button>
+      </form>
       <a href="<?php echo Helper::url('admin/user/create'); ?>" 
          class="btn btn-light btn-sm fw-semibold rounded-pill shadow-sm d-flex align-items-center gap-2">
         <i class="fas fa-user-plus"></i> Thêm khách hàng

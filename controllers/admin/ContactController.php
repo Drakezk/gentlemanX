@@ -6,13 +6,23 @@ class ContactController extends Controller {
         $this->contactModel = $this->model('Contact');
     }
 
-    // Danh sách liên hệ
     public function index() {
-        $messages = $this->contactModel->getAllMessages();
-        $this->view('contact/index', ['messages' => $messages], 'admin');
+        $keyword = trim($_GET['q'] ?? '');
+        $status = $_GET['status'] ?? null;
+
+        if (!empty($keyword) || !empty($status)) {
+            $messages = $this->contactModel->searchMessages($keyword, $status);
+        } else {
+            $messages = $this->contactModel->getAllMessages();
+        }
+
+        $this->view('contact/index', [
+            'messages' => $messages,
+            'keyword' => $keyword,
+            'status' => $status
+        ], 'admin');
     }
 
-    // Chi tiết 1 liên hệ
     public function detail($id) {
         $message = $this->contactModel->getMessageById($id);
 

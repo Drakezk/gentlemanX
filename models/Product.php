@@ -1,9 +1,4 @@
 <?php
-/**
- * Product Model - Model cho bảng products
- * Xử lý các thao tác liên quan đến sản phẩm
- */
-
 class Product extends Model {
     protected $table = 'products';
     protected $fillable = [
@@ -16,8 +11,6 @@ class Product extends Model {
     
     /**
      * Lấy sản phẩm theo slug
-     * @param string $slug
-     * @return array|null
      */
     public function getBySlug($slug) {
         $sql = "SELECT p.*, c.name as category_name, c.slug as category_slug,
@@ -32,11 +25,6 @@ class Product extends Model {
     
     /**
      * Lấy sản phẩm theo danh mục
-     * @param int $categoryId
-     * @param int $page
-     * @param int $perPage
-     * @param array $filters
-     * @return array
      */
     public function getByCategory($categoryId, $page = 1, $perPage = 12, $filters = []) {
         $offset = ($page - 1) * $perPage;
@@ -90,9 +78,6 @@ class Product extends Model {
 
     /**
      * Lấy sản phẩm theo bộ lọc
-     * @param array $filters
-     * @param string $orderBy
-     * @return array
      */
     public function getFiltered($filters = [], $orderBy = 'p.created_at DESC') {
         $sql = "SELECT p.*, c.name as category_name, b.name as brand_name
@@ -109,7 +94,7 @@ class Product extends Model {
             $params[] = $filters['category_id'];
         }
 
-        // Lọc theo khoảng giá (nếu có)
+        // Lọc theo khoảng giá
         if (isset($filters['price_min'])) {
             $sql .= " AND p.price >= ?";
             $params[] = $filters['price_min'];
@@ -128,8 +113,6 @@ class Product extends Model {
     
     /**
      * Lấy sản phẩm nổi bật
-     * @param int $limit
-     * @return array
      */
     public function getFeatured($limit = 8) {
         $sql = "SELECT p.*, c.name as category_name, b.name as brand_name
@@ -145,8 +128,6 @@ class Product extends Model {
     
     /**
      * Lấy sản phẩm mới nhất
-     * @param int $limit
-     * @return array
      */
     public function getLatest($limit = 8) {
         $sql = "SELECT p.*, c.name as category_name, b.name as brand_name
@@ -162,11 +143,6 @@ class Product extends Model {
     
     /**
      * Tìm kiếm sản phẩm
-     * @param string $keyword
-     * @param int $page
-     * @param int $perPage
-     * @param array $filters
-     * @return array
      */
     public function search($keyword, $page = 1, $perPage = 12, $filters = []) {
     $offset = ($page - 1) * $perPage;
@@ -248,8 +224,6 @@ class Product extends Model {
     
     /**
      * Cập nhật số lượt xem
-     * @param int $productId
-     * @return bool
      */
     public function incrementViewCount($productId) {
         $sql = "UPDATE {$this->table} SET view_count = view_count + 1 WHERE id = ?";
@@ -258,9 +232,6 @@ class Product extends Model {
     
     /**
      * Cập nhật số lượng đã bán
-     * @param int $productId
-     * @param int $quantity
-     * @return bool
      */
     public function incrementSoldCount($productId, $quantity) {
         $sql = "UPDATE {$this->table} SET sold_count = sold_count + ? WHERE id = ?";
@@ -269,9 +240,6 @@ class Product extends Model {
     
     /**
      * Cập nhật stock quantity
-     * @param int $productId
-     * @param int $quantity
-     * @return bool
      */
     public function updateStock($productId, $quantity) {
         $sql = "UPDATE {$this->table} SET stock_quantity = stock_quantity - ? WHERE id = ?";
@@ -280,9 +248,6 @@ class Product extends Model {
     
     /**
      * Kiểm tra sản phẩm có đủ stock không
-     * @param int $productId
-     * @param int $quantity
-     * @return bool
      */
     public function hasStock($productId, $quantity) {
         $product = $this->getById($productId);
@@ -306,9 +271,6 @@ class Product extends Model {
     
     /**
      * Lấy sản phẩm liên quan
-     * @param int $productId
-     * @param int $limit
-     * @return array
      */
     public function getRelated($productId, $limit = 4) {
         $product = $this->getById($productId);
@@ -331,7 +293,6 @@ class Product extends Model {
     
     /**
      * Lấy thống kê sản phẩm
-     * @return array
      */
     public function getStats() {
     $stats = [];
@@ -397,8 +358,6 @@ class Product extends Model {
 
     /**
      * Lấy sản phẩm theo SKU
-     * @param string $sku
-     * @return array|null
      */
     public function getBySku($sku) {
         $sql = "SELECT * FROM {$this->table} WHERE sku = ? AND deleted_at IS NULL";
@@ -444,6 +403,23 @@ class Product extends Model {
     public function deleteProduct($id) {
         $sql = "UPDATE {$this->table} SET deleted_at = NOW() WHERE id = ?";
         return $this->db->execute($sql, [$id]);
+    }
+
+    public function searchProducts($keyword, $status = null) {
+        $sql = "SELECT * FROM {$this->table}
+                WHERE (name LIKE ? OR slug LIKE ? OR sku LIKE ?)";
+        
+        $kw = "%{$keyword}%";
+        $params = [$kw, $kw, $kw];
+
+        if (!empty($status)) {
+            $sql .= " AND status = ?";
+            $params[] = $status;
+        }
+
+        $sql .= " ORDER BY created_at DESC";
+
+        return $this->db->select($sql, $params);
     }
 
 }
