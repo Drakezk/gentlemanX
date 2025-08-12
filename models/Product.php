@@ -422,5 +422,21 @@ class Product extends Model {
         return $this->db->select($sql, $params);
     }
 
+    // Giảm số lượng tồn kho
+    public function decrementStock($productId, $quantity) {
+        $product = $this->getById($productId);
+
+        if (!$product) {
+            return false;
+        }
+
+        // Đảm bảo không giảm dưới 0
+        $newQty = max(0, $product['stock_quantity'] - $quantity);
+
+        return $this->update($productId, [
+            'stock_quantity' => $newQty
+        ]);
+    }
+
 }
 ?>

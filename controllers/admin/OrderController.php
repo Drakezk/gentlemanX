@@ -41,6 +41,18 @@ class OrderController extends Controller {
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $newStatus = $_POST['status'];
+
+            // Nếu chuyển từ pending sang confirmed thì trừ kho
+            if ($order['status'] === 'pending' && $newStatus === 'confirmed') {
+                $orderItems = $this->model('OrderItem')->getByOrderId($id);
+                $productModel = $this->model('Product');
+
+                foreach ($orderItems as $item) {
+                    $productModel->decrementStock($item['product_id'], $item['quantity']);
+                }
+            }
+            // Cập nhật trạng thái đơn hàng
             $updateData = [
                 'status' => $_POST['status'],
                 'payment_status' => $_POST['payment_status'],

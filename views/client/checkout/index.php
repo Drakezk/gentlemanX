@@ -88,10 +88,6 @@
                 <label class="form-label">Phương thức thanh toán</label>
                 <select name="payment_method" class="form-select">
                   <option value="cod">Thanh toán khi nhận hàng (COD)</option>
-                  <option value="bank_transfer">Chuyển khoản ngân hàng</option>
-                  <option value="momo">Momo</option>
-                  <option value="vnpay">VNPay</option>
-                  <option value="paypal">PayPal</option>
                 </select>
               </div>
 

@@ -1,9 +1,4 @@
 <?php
-/**
- * Product Controller - Controller cho sản phẩm Client
- * Xử lý các request liên quan đến sản phẩm
- */
-
 class ProductController extends Controller {
     private $productModel;
     private $categoryModel;
@@ -60,7 +55,6 @@ class ProductController extends Controller {
     
     /**
      * Chi tiết sản phẩm
-     * @param string $slug
      */
     public function detail($slug) {
         $product = $this->productModel->getBySlug($slug);
@@ -81,13 +75,17 @@ class ProductController extends Controller {
         $reviews = $this->reviewModel->getByProductId($product['id']);
         $reviewStats = $this->reviewModel->getStatsByProductId($product['id']);
 
+        // Lấy số lượng tồn kho hiện tại
+        $stockQuantity = $product['stock_quantity'] ?? 0;
+
         $data = [
             'title' => $product['name'],
             'product' => $product,
             'relatedProducts' => $relatedProducts,
             'breadcrumb' => $breadcrumb,
             'reviews' => $reviews,
-            'reviewStats' => $reviewStats
+            'reviewStats' => $reviewStats,
+            'stockQuantity'  => $stockQuantity
         ];
         
         $this->view('home/detail', $data, 'client');

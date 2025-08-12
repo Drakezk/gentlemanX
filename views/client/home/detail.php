@@ -83,6 +83,23 @@
         </div>
 
         <div class="mb-3">
+          <i class="fas fa-box text-muted me-1"></i>
+          <?php if ($stockQuantity > 20): ?>
+            <span class="px-2 py-1 rounded-pill text-white fw-semibold" style="background: linear-gradient(45deg, #28a745, #5dd39e);">
+              Sẵn hàng – giao ngay
+            </span>
+          <?php elseif ($stockQuantity > 0): ?>
+            <span class="px-2 py-1 rounded-pill text-white fw-semibold" style="background: linear-gradient(45deg, #ff6a00, #ff9800);">
+              Sắp hết! Chỉ còn <?php echo $stockQuantity; ?> sản phẩm
+            </span>
+          <?php else: ?>
+            <span class="px-2 py-1 rounded-pill text-white fw-semibold" style="background: linear-gradient(45deg, #dc3545, #ff5f6d);">
+                Tạm hết hàng – sẽ có lại sớm
+            </span>
+          <?php endif; ?>
+        </div>
+
+        <div class="mb-3">
           <span class="fw-semibold">Danh mục:</span>
           <a href="<?php echo Helper::url('product?category=' . $product['category_slug']); ?>" class="text-decoration-none text-primary fw-medium">
             <?php echo Helper::e($product['category_name']); ?>

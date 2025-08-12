@@ -50,6 +50,17 @@ class CheckoutController extends Controller {
                 Helper::redirect('cart');
             }
 
+            // Kiểm tra tồn kho
+            $productModel = $this->model('Product');
+            foreach ($cartItems as $item) {
+                $product = $productModel->getById($item['product_id']);
+                if (!$product || $product['stock_quantity'] < $item['quantity']) {
+                    $_SESSION['error'] = "Sản phẩm '{$item['name']}' không đủ số lượng tồn kho!";
+                    Helper::redirect('cart');
+                    return;
+                }
+            }
+
             // Lấy dữ liệu form
             $data = [
                 'user_id' => $userId,
