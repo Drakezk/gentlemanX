@@ -55,7 +55,7 @@
       </div>
 
       <div class="d-flex justify-content-end mt-4">
-        <a href="<?php echo Helper::url('checkout'); ?>" class="btn btn-lg btn-success">
+        <a id="checkoutBtn" href="<?php echo Helper::url('checkout'); ?>" class="btn btn-lg btn-success">
           <i class="fas fa-credit-card me-2"></i>Tiến hành thanh toán
         </a>
       </div>
@@ -96,5 +96,6 @@
   });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo Helper::asset('js/cart.js'); ?>"></script>
 
 <?php include 'views/client/layouts/footer.php'; ?>
